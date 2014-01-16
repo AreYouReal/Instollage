@@ -2,9 +2,13 @@ package are.you.real.getcollage;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -46,21 +50,27 @@ public class GCApp {
         mAccessToken = mPreferences.getAccessToken();
         mCallBackUrl = callbackUrl;
         mTokenUrl = TOKEN_URL + "?client_id=" + mClientID + "&client_secret=" +
-                    mClientSecretKey + "&redirect_uri=" + mCallBackUrl + "&grant_type=authorization_code";
+                    mClientSecretKey + "&redirect_uri=" + mCallBackUrl + "&response_type=token";
         mAuthUrl = AUTH_URL + "?client_id=" + mClientID + "&redirect_uri=" +
                    mCallBackUrl + "&response_type=code&display=touch&scope=likes+comments+relationships";
 
         GCDialog.GCOAuthDialogListener listener = new GCDialog.GCOAuthDialogListener(){
             @Override
-            public void onComplete(String accessToken) { /* getAccesToken(); */ }
+            public void onComplete(String code) {  getAccessToken(code);  }
 
             @Override
-            public void onError(String error) { mListener.onFail("Authorization failed"); }
+            public void onError(String error) { mListener.onFail("Authorization failed: " + error); }
         };
 
-        mDialog = new GCDialog(context, mAuthUrl, listener);
+        mDialog = new GCDialog(context, mTokenUrl, listener);
         mProgress = new ProgressDialog(context);
         mProgress.setCancelable(false);
+
+        CookieSyncManager.createInstance(context);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeAllCookie();
+        getAccessToken(mTokenUrl);
+
     }
 
     public static String getCallBackUrl(){
@@ -76,14 +86,14 @@ public class GCApp {
                 Log.i(TAG, "Getting access token");
                 int what = RESULT.INFO.ordinal();
                 try {
-                    URL url = new URL(TOKEN_URL);
-                    //URL url = new URL(mTokenUrl + "&code=" + code);
+                    //URL url = new URL(TOKEN_URL);
+                    URL url = new URL(mTokenUrl);
                     Log.i(TAG, "Opening Token URL " + url.toString());
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("POST");
                     urlConnection.setDoInput(true);
                     urlConnection.setDoOutput(true);
-                    //urlConnection.connect();
+                    urlConnection.connect();
                     OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
                     writer.write("client_id="+mClientID+
                             "&client_secret="+mClientSecretKey+
@@ -192,9 +202,9 @@ public class GCApp {
     }
 
     public void authorize() {
-        //Intent webAuthIntent = new Intent(Intent.ACTION_VIEW);
-        //webAuthIntent.setData(Uri.parse(AUTH_URL));
-        //mCtx.startActivity(webAuthIntent);
+/*        Intent webAuthIntent = new Intent(Intent.ACTION_VIEW);
+        webAuthIntent.setData(Uri.parse(AUTH_URL));
+        mContext.startActivity(webAuthIntent);*/
         mDialog.show();
     }
 
@@ -222,6 +232,13 @@ public class GCApp {
         }
 
         return str;
+    }
+
+    public void resetAccessToken() {
+        if (mAccessToken != null) {
+            mPreferences.resetAccessToken();
+            mAccessToken = null;
+        }
     }
 
 

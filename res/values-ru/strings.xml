@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">Давай Коллаж!</string>
     <string name="loading">Загрузка... Пожалуйста подождите</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

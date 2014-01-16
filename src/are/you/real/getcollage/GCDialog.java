@@ -6,9 +6,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,6 +47,10 @@ public class GCDialog extends Dialog {
         mContent = new LinearLayout(getContext());
         mContent.setOrientation(LinearLayout.VERTICAL);
         setUpWebView();
+        mTitle = new TextView(getContext());
+        mTitle.setText("Title text");
+        setTitle(mTitle.getText());
+        addContentView(mContent, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     private void setUpWebView(){
@@ -52,6 +58,10 @@ public class GCDialog extends Dialog {
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setWebViewClient(new GCOAuthWebViewClient());
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.loadUrl(mUrl);
+        mWebView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mContent.addView(mWebView);
     }
 
     private class GCOAuthWebViewClient extends WebViewClient {
@@ -70,7 +80,7 @@ public class GCDialog extends Dialog {
 
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            Log.d(TAG, "Page error: " + description);
+            Log.d(TAG, "Page error: " + description + failingUrl);
 
             super.onReceivedError(view, errorCode, description, failingUrl);
             mListener.onError(description);
@@ -99,7 +109,7 @@ public class GCDialog extends Dialog {
     }
 
     public interface GCOAuthDialogListener{
-        public void onComplete(String accessToken);
+        public void onComplete(String code);
         public void onError(String error);
 
     }

@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">getcollage</string>
     <string name="loading">Loading... Please wait</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
