@@ -7,9 +7,10 @@ import android.content.SharedPreferences;
  * Created by AreYouReal on 16/01/14.
  */
 public class GCPreferences {
+    public static final String CLIENT_ID = "c34062307c0d4594bb3830eaab09488a";
+    public static final String CALLBACK_URL = "instagram://connect";
 
-    private SharedPreferences           sharedPref;
-    private SharedPreferences.Editor    editor;
+    private static SharedPreferences           sharedPref;
 
     private static final String SHARED_PREF_NAME    = "GetCollage Preferences";
     private static final String API_USERNAME        = "username";
@@ -17,53 +18,22 @@ public class GCPreferences {
     private static final String API_NAME            = "name";
     private static final String API_ACCESS_TOKEN = "acces_token";
 
-
-    public GCPreferences(Context context){
-        sharedPref  = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        editor      = sharedPref.edit();
+    public static void init(Context context){
+        if(sharedPref == null){
+            sharedPref  = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        }
     }
 
-
-
-    public void storeAccessToken(String accessToken, String id, String username, String name){
-        editor.putString(API_ID, id);
-        editor.putString(API_NAME, name);
-        editor.putString(API_ACCESS_TOKEN, accessToken);
-        editor.putString(API_USERNAME, username);
-        editor.commit();
-    }
-
-    public void storeAccessToken(String accessToken) {
+    public static void setAccessToken(String accessToken) {
+        SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(API_ACCESS_TOKEN, accessToken);
         editor.commit();
     }
 
-    public void resetAccessToken() {
-        editor.putString(API_ID, null);
-        editor.putString(API_NAME, null);
+    public static void resetAccessToken() {
+        SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(API_ACCESS_TOKEN, null);
-        editor.putString(API_USERNAME, null);
         editor.commit();
-    }
-
-    public String getUsername() {
-        return sharedPref.getString(API_USERNAME, null);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getId() {
-        return sharedPref.getString(API_ID, null);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getName() {
-        return sharedPref.getString(API_NAME, null);
     }
 
     /**
@@ -71,7 +41,7 @@ public class GCPreferences {
      *
      * @return Access token
      */
-    public String getAccessToken() {
+    public static String getAccessToken() {
         return sharedPref.getString(API_ACCESS_TOKEN, null);
     }
 

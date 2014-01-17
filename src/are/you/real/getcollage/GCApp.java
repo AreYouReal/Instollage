@@ -26,7 +26,6 @@ public class GCApp {
     private GCDialog        mDialog;
     private GCOAuthListener mListener;
     private ProgressDialog  mProgress;
-    private String          mAuthUrl;
     private String          mTokenUrl;
     private String          mAccessToken;
     private Context         mContext;
@@ -36,9 +35,7 @@ public class GCApp {
     private enum RESULT{SUCCESS, ERROR, INFO}
 
     private static String mCallBackUrl = "";
-    private static final String AUTH_URL = "https://api.instagram.com/oauth/authorize/";
-    private static final String TOKEN_URL = "https://api.instagram.com/oauth/access_token";
-    private static final String API_URL = "https://api.instagram.com/v1";
+    private static final String TOKEN_URL = "https://instagram.com/oauth/authorize/";
 
 
     public GCApp(Context context, String clientID, String clientSecretKey, String callbackUrl ){
@@ -46,17 +43,14 @@ public class GCApp {
         mClientSecretKey    = clientSecretKey;
         mContext            = context;
 
-        mPreferences = new GCPreferences(context);
+
         mAccessToken = mPreferences.getAccessToken();
         mCallBackUrl = callbackUrl;
-        mTokenUrl = TOKEN_URL + "?client_id=" + mClientID + "&client_secret=" +
-                    mClientSecretKey + "&redirect_uri=" + mCallBackUrl + "&response_type=token";
-        mAuthUrl = AUTH_URL + "?client_id=" + mClientID + "&redirect_uri=" +
-                   mCallBackUrl + "&response_type=code&display=touch&scope=likes+comments+relationships";
+        mTokenUrl = TOKEN_URL + "?client_id=" + mClientID + "&redirect_uri=" + mCallBackUrl + "&response_type=token";
 
         GCDialog.GCOAuthDialogListener listener = new GCDialog.GCOAuthDialogListener(){
             @Override
-            public void onComplete(String code) {  getAccessToken(code);  }
+            public void onComplete(String code) { /* getAccessToken(code);*/  }
 
             @Override
             public void onError(String error) { mListener.onFail("Authorization failed: " + error); }
@@ -69,59 +63,14 @@ public class GCApp {
         CookieSyncManager.createInstance(context);
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.removeAllCookie();
-        getAccessToken(mTokenUrl);
-
     }
 
     public static String getCallBackUrl(){
         return mCallBackUrl;
     }
+/*
 
-    private void getAccessToken(final String code){
-        mProgress.setMessage("Getting access token...");
-        mProgress.show();
-        new Thread() {
-            @Override
-            public void run() {
-                Log.i(TAG, "Getting access token");
-                int what = RESULT.INFO.ordinal();
-                try {
-                    //URL url = new URL(TOKEN_URL);
-                    URL url = new URL(mTokenUrl);
-                    Log.i(TAG, "Opening Token URL " + url.toString());
-                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                    urlConnection.setRequestMethod("POST");
-                    urlConnection.setDoInput(true);
-                    urlConnection.setDoOutput(true);
-                    urlConnection.connect();
-                    OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
-                    writer.write("client_id="+mClientID+
-                            "&client_secret="+mClientSecretKey+
-                            "&grant_type=authorization_code" +
-                            "&redirect_uri="+mCallBackUrl+
-                            "&code=" + code);
-                    writer.flush();
-                    String response = streamToString(urlConnection.getInputStream());
-                    Log.i(TAG, "response " + response);
-                    JSONObject jsonObj = (JSONObject) new JSONTokener(response).nextValue();
 
-                    mAccessToken = jsonObj.getString("access_token");
-                    Log.i(TAG, "Got access token: " + mAccessToken);
-
-                    String id = jsonObj.getJSONObject("user").getString("id");
-                    String user = jsonObj.getJSONObject("user").getString("username");
-                    String name = jsonObj.getJSONObject("user").getString("full_name");
-
-                    mPreferences.storeAccessToken(mAccessToken, id, user, name);
-
-                } catch (Exception ex) {
-                    what = RESULT.ERROR.ordinal();
-                    ex.printStackTrace();
-                }
-
-                mHandler.sendMessage(mHandler.obtainMessage(what, 1, 0));
-            }
-        }.start();
     }
 
     private void fetchUserName() {
@@ -157,6 +106,7 @@ public class GCApp {
         }.start();
 
     }
+*/
 
 
     private Handler mHandler = new Handler() {
@@ -172,7 +122,7 @@ public class GCApp {
                 }
             }
             else if(msg.what == RESULT.INFO.ordinal()) {
-                fetchUserName();
+                /*fetchUserName();*/
             }
             else {
                 mProgress.dismiss();
@@ -189,17 +139,6 @@ public class GCApp {
         mListener = listener;
     }
 
-    public String getUserName() {
-        return mPreferences.getUsername();
-    }
-
-    public String getId() {
-        return mPreferences.getId();
-    }
-
-    public String getName() {
-        return mPreferences.getName();
-    }
 
     public void authorize() {
 /*        Intent webAuthIntent = new Intent(Intent.ACTION_VIEW);

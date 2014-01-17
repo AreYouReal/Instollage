@@ -1,19 +1,19 @@
 package are.you.real.getcollage;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.webkit.WebView;
 
-public class GCMainActivity extends Activity {
+public class GCMainActivity extends FragmentActivity {
 
-    private GCApp       mApp;
-    private Button      btnConnect;
-    private TextView    tvSummary;
+    private static final String TAG = "GCMainActivity";
+
+    private static final int NUM_PAGES = 2;
+
+    private ViewPager       mPager;
+    private PagerAdapter    mPagerAdapter;
 
     /**
      * Called when the activity is first created.
@@ -21,57 +21,18 @@ public class GCMainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.main_pager);
 
-        mApp = new GCApp(this, GCAppStaticData.CLIENT_ID, GCAppStaticData.CLIENT_SECRET_KEY, GCAppStaticData.CALLBACK_URL);
-        mApp.setListener(listener);
+        GCPreferences.init(this);
 
-        tvSummary = (TextView) findViewById(R.id.tv_summary);
-        btnConnect = (Button) findViewById(R.id.btn_connect);
-        btnConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mApp.hasAccessToken()){
-                    final AlertDialog.Builder builder= new AlertDialog.Builder(GCMainActivity.this);
-                    builder.setMessage("Disconnect from Instagram?").setCancelable(false);
-                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            mApp.resetAccessToken();
-                            btnConnect.setText("Connect");
-                            tvSummary.setText("Not connected");
-                        }
-                    });
-                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
-                        }
-                    });
-                    final AlertDialog alert = builder.create();
-                    alert.show();
-                } else {
-                    mApp.authorize();
-                }
-            }
-        });
-
-        if(mApp.hasAccessToken()){
-            tvSummary.setText("Connected as " + mApp.getUserName());
-            btnConnect.setText("Disconnect");
-        }
-
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new GCPagerAdapter(getSupportFragmentManager(), NUM_PAGES);
+        mPager.setAdapter(mPagerAdapter);
     }
 
 
-    GCApp.GCOAuthListener listener = new GCApp.GCOAuthListener() {
-        @Override
-        public void onSuccess() {
-            tvSummary.setText("Connected as " + mApp.getUserName());
-            btnConnect.setText("Disconnect");
-        }
-
-        @Override
-        public void onFail(String error) { Toast.makeText(GCMainActivity.this, error, Toast.LENGTH_SHORT).show(); }
-    };
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

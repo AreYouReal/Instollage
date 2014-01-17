@@ -57,55 +57,10 @@ public class GCDialog extends Dialog {
         mWebView = new WebView(getContext());
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);
-        mWebView.setWebViewClient(new GCOAuthWebViewClient());
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl(mUrl);
+        mWebView.loadUrl("https://api.instagram.com/oauth/authorize/?client_id=c34062307c0d4594bb3830eaab09488a&redirect_uri=instagram://connect&response_type=code");
         mWebView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         mContent.addView(mWebView);
-    }
-
-    private class GCOAuthWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Log.d(TAG, "Redirect URL: " + url);
-
-            if(url.startsWith(GCApp.getCallBackUrl())){
-                String urls[] = url.split("=");
-                mListener.onComplete(urls[1]);
-                GCDialog.this.dismiss();
-                return true;
-            }
-            return false;
-        }
-
-        @Override
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            Log.d(TAG, "Page error: " + description + failingUrl);
-
-            super.onReceivedError(view, errorCode, description, failingUrl);
-            mListener.onError(description);
-            GCDialog.this.dismiss();
-        }
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            Log.d(TAG, "Loading URL: " + url);
-
-            super.onPageStarted(view, url, favicon);
-            mSpinner.show();
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-            String title = mWebView.getTitle();
-            if (title != null && title.length() > 0) {
-                mTitle.setText(title);
-            }
-            Log.d(TAG, "onPageFinished URL: " + url);
-            mSpinner.dismiss();
-        }
-
     }
 
     public interface GCOAuthDialogListener{
