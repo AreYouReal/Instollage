@@ -1,5 +1,6 @@
 package are.you.real.getcollage;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,7 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.widget.*;
+import com.androidquery.AQuery;
 
 /**
  * Created by AreYouReal on 17/01/14.
@@ -21,12 +23,14 @@ public class GCFragment extends Fragment {
     private static final String TAG = "GCFragment";
     public  static final String ARG_PAGE = "page";
 
+    private static Context mContext;
     private static Handler mHandler;
 
     private int numOfPage;
 
-    public static void init(Handler handler){
+    public static void init(Context context, Handler handler){
         mHandler = handler;
+        mContext = context;
     }
 
 
@@ -55,7 +59,7 @@ public class GCFragment extends Fragment {
                 wv.setWebViewClient(new GCWebViewClient(getActivity().getBaseContext()));
                 wv.getSettings().setJavaScriptEnabled(true);
                 wv.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-                wv.loadUrl("https://instagram.com/oauth/authorize/?client_id=" + GCPreferences.CLIENT_ID +  "&redirect_uri=" + GCPreferences.CALLBACK_URL + "&response_type=token");
+                //wv.loadUrl("https://instagram.com/oauth/authorize/?client_id=" + GCPreferences.CLIENT_ID +  "&redirect_uri=" + GCPreferences.CALLBACK_URL + "&response_type=token");
                 Log.v(TAG, "Container " + container);
                 return wv;
 

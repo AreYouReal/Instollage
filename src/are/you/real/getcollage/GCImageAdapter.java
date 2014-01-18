@@ -6,16 +6,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import com.androidquery.AQuery;
 
 /**
  * Created by Alexander on 18/01/14.
  */
 public class GCImageAdapter extends BaseAdapter {
     private Context mContext;
-    private int[] thumbsId = {};
+    private static AQuery androidAQuery;
 
     public GCImageAdapter(Context context){
         this.mContext = context;
+        androidAQuery = new AQuery(mContext);
     }
 
     public int getCount(){
@@ -43,6 +45,7 @@ public class GCImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
+        //androidAQuery.id(imageView).image(GCPreferences.getImageUrl(position), true, true, 150,android.R.drawable.btn_default );
         imageView.setImageResource(android.R.drawable.ic_menu_send);
         return imageView;
     }

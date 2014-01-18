@@ -16,6 +16,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="v4" level="project" />
+    <orderEntry type="library" name="android-query.0.26.7" level="project" />
   </component>
 </module>
 

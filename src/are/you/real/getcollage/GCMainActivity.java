@@ -12,7 +12,6 @@ import android.webkit.CookieSyncManager;
 
 public class GCMainActivity extends FragmentActivity {
 
-
     public static final String RESULT = "RESULT";
 
     private static final String TAG = "GCMainActivity";
@@ -59,12 +58,12 @@ public class GCMainActivity extends FragmentActivity {
 
         GCPreferences.init(this, mHandler);
         GCSession.init(mHandler);
-        GCFragment.init(mHandler);
+        GCFragment.init(this, mHandler);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new GCPagerAdapter(getSupportFragmentManager(), NUM_PAGES);
         mPager.setAdapter(mPagerAdapter);
-        mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
+        mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
 
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -82,6 +81,9 @@ public class GCMainActivity extends FragmentActivity {
 
             }
         });
+
+
+
     }
 
 
