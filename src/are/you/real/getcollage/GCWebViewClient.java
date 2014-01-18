@@ -30,12 +30,12 @@ class GCWebViewClient extends WebViewClient {
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         Log.d(TAG, "Redirect URL: " + url);
 
-/*        if(url.startsWith("instagram://connect")){
+        if(url.startsWith("instagram://connect")){
             String urls[] = url.split("=");
             Log.d(TAG, "TOKEN: " + urls[1]);
             GCPreferences.setAccessToken(urls[1]);
             return true;
-        }*/
+        }
         return false;
     }
 

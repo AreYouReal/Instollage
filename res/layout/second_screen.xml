@@ -17,5 +17,5 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/user_name" android:layout_gravity="center" android:hint="@string/hint"
-            android:textColorHint="#47755f" android:text="zyoshka" android:singleLine="false"/>
+            android:textColorHint="#47755f" android:text="vetra_net" android:singleLine="false"/>
 </FrameLayout>

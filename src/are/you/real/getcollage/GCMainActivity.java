@@ -63,7 +63,7 @@ public class GCMainActivity extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new GCPagerAdapter(getSupportFragmentManager(), NUM_PAGES);
         mPager.setAdapter(mPagerAdapter);
-        mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
+        mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
 
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

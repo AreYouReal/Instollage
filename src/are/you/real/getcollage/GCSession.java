@@ -93,8 +93,11 @@ public class GCSession {
                         Log.d(TAG,"Response: " + response);
 
                         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
-                        stringUrl = jsonObject.getJSONObject("pagination").getString("next_url");
-                        Log.d(TAG, stringUrl);
+                        if(jsonObject.getJSONObject("pagination").has("next_url"))
+                            stringUrl = jsonObject.getJSONObject("pagination").getString("next_url");
+                        else
+                            stringUrl = null;
+                        Log.d(TAG, stringUrl == null ? "null" : stringUrl);
                         JSONArray mArray = jsonObject.getJSONArray("data");
                         Log.d(TAG, "" + mArray.length());
                         for(int i = 0; i < mArray.length(); i++){
@@ -103,7 +106,7 @@ public class GCSession {
                                 GCPreferences.putImageUrl(Integer.parseInt(imageData[0]), imageData[1]);
                         }
                     }while(stringUrl != null);
-                    GCPreferences.printFirst20thPhotos();
+                    GCPreferences.findTheBestImages();
                 } catch (MalformedURLException e) {
                     Log.e(TAG, e.toString());
                     e.printStackTrace();
@@ -125,12 +128,10 @@ public class GCSession {
 
     private static String[] getImage(JSONObject jsObject){
         try {
-            Log.d(TAG, "" + jsObject.getString("type").equals("image"));
             if(!(jsObject.getString("type").equals("image")))
                 return null;
-
             String[] returnValue = {jsObject.getJSONObject("likes").getString("count")
-                                    ,jsObject.getJSONObject("images").getJSONObject("thumbnail").getString("url")};
+                                    ,jsObject.getJSONObject("images").getJSONObject("low_resolution").getString("url")};
             return returnValue;
         } catch (JSONException e) {
             Log.e(TAG, e.toString());

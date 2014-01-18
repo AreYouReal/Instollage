@@ -7,9 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by AreYouReal on 16/01/14.
@@ -29,8 +27,8 @@ public class GCPreferences {
     private static final String MEDIA_LIMIT = "PhotoLimit";
     private static final String MEDIA_LIMIT_BY_DEFAULT = "1000";
 
-    private static final TreeMap<Integer, String> imagesMap = new TreeMap<Integer, String>();
-    private static String[] imagesUrlsArr;
+    private static final TreeMap<Integer, List<String>> imagesMap = new TreeMap<Integer, List<String>>(Collections.reverseOrder());
+    private static String[] imagesUrlsArr = new String[20];
 
     private static Handler mHandler;
 
@@ -88,20 +86,29 @@ public class GCPreferences {
     }
 
     public static void putImageUrl(Integer key, String url){
-        imagesMap.put(key, url);
-        //Log.d(TAG, key + "\t" + imagesMap.get(key));
+        if(imagesMap.get(key) != null)
+            imagesMap.get(key).add(url);
+        else{
+            ArrayList arrayList = new ArrayList<String>();
+            arrayList.add(url);
+            imagesMap.put(key, arrayList);
+        }
     }
 
     // TODO: This method should create SET and called in another way
-    public static void printFirst20thPhotos(){
+    public static void findTheBestImages(){
         Set imagesUrls = imagesMap.entrySet();
         Iterator it = imagesUrls.iterator();
         int i = 0;
-        while(it.hasNext()){
-            if(i < 20)
-                imagesUrlsArr[i] = it.next().toString();
-
-            Log.d(TAG, it.next().toString());
+        while(it.hasNext() && i < imagesUrlsArr.length){
+            Map.Entry<Integer, List<String>> entry = (Map.Entry<Integer, List<String>>)it.next();
+            ArrayList<String> aList = (ArrayList<String>)entry.getValue();
+            if(i < imagesUrlsArr.length){
+                for(String s: aList){
+                    if(i < imagesUrlsArr.length)
+                    imagesUrlsArr[i++] = s;
+                }
+            }
         }
     }
 

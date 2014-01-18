@@ -55,11 +55,13 @@ public class GCFragment extends Fragment {
         switch (numOfPage){
             case 0:
                 WebView wv;
-                wv = new WebView(getActivity().getBaseContext());
-                wv.setWebViewClient(new GCWebViewClient(getActivity().getBaseContext()));
+                wv = new WebView(mContext);
+                wv.setWebViewClient(new GCWebViewClient(mContext));
                 wv.getSettings().setJavaScriptEnabled(true);
                 wv.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-                //wv.loadUrl("https://instagram.com/oauth/authorize/?client_id=" + GCPreferences.CLIENT_ID +  "&redirect_uri=" + GCPreferences.CALLBACK_URL + "&response_type=token");
+                wv.loadUrl("https://instagram.com/oauth/authorize/?client_id=" + GCPreferences.CLIENT_ID +  "&redirect_uri=" + GCPreferences.CALLBACK_URL + "&response_type=token"); // TODO: WTF? This code crushs my app:))
+                //wv.loadUrl("https://instagram.com/accounts/login/?next=/oauth/authorize/%3Fclient_id%3Dc34062307c0d4594bb3830eaab09488a%26redirect_uri%3Dinstagram%3A//connect%26response_type%3Dtoken"); // TODO: And this doesn't:)
+
                 Log.v(TAG, "Container " + container);
                 return wv;
 
@@ -71,7 +73,7 @@ public class GCFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         if(usernameText.getText().length() <= 1)
-                            Toast.makeText(getActivity().getBaseContext(), R.string.error_too_short_username, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, R.string.error_too_short_username, Toast.LENGTH_SHORT).show();
                         else{
                             GCSession.getUserId(usernameText.getText().toString().trim());
                             Bundle b = new Bundle();
@@ -86,7 +88,7 @@ public class GCFragment extends Fragment {
             case 2:
                 ViewGroup collageView = (ViewGroup) inflater.inflate(R.layout.collage_screen, container, false);
                 GridView grid = (GridView) collageView.findViewById(R.id.collage_grid);
-                grid.setAdapter(new GCImageAdapter(getActivity().getBaseContext()));
+                grid.setAdapter(new GCImageAdapter(mContext));
                 Button button = (Button) collageView.findViewById(R.id.send_btn);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -94,13 +96,13 @@ public class GCFragment extends Fragment {
                         Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                         emailIntent.setType("text/plain");
                         emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        getActivity().getBaseContext().startActivity(emailIntent);
+                        mContext.startActivity(emailIntent);
                     }
                 });
                 return collageView;
 
             default:
-                TextView tv = new TextView(getActivity().getBaseContext());
+                TextView tv = new TextView(mContext);
                 tv.setText("Page# " + numOfPage);
                 return tv;
         }

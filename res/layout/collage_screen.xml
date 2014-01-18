@@ -3,12 +3,13 @@
 <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="#ffffff">
     <GridView
             android:layout_width="wrap_content"
             android:layout_height="447dp"
             android:id="@+id/collage_grid" android:layout_gravity="center_horizontal" android:numColumns="3"
-            android:drawSelectorOnTop="false"/>
+            android:drawSelectorOnTop="false" android:background="#94a8ff"/>
     <Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
