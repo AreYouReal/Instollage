@@ -52,7 +52,7 @@ public class GCFragment extends Fragment {
             case 0:
                 WebView wv;
                 wv = new WebView(getActivity().getBaseContext());
-                wv.setWebViewClient(new GCWebVIewClient(getActivity().getBaseContext()));
+                wv.setWebViewClient(new GCWebViewClient(getActivity().getBaseContext()));
                 wv.getSettings().setJavaScriptEnabled(true);
                 wv.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
                 wv.loadUrl("https://instagram.com/oauth/authorize/?client_id=" + GCPreferences.CLIENT_ID +  "&redirect_uri=" + GCPreferences.CALLBACK_URL + "&response_type=token");
