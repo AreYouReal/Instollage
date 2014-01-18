@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Make Collage</string>
+    <string name="app_name">getcollage</string>
     <string name="loading">Loading... Please wait</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="hint">Enter the username</string>
-    <string name="btn_text">Make Collage!</string>
+    <string name="btn_text">Get Collage!</string>
     <string name="error_too_short_username">Too short username</string>
     <string name="send_to_mail">Send e-mail</string>
 </resources>

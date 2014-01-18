@@ -7,11 +7,12 @@ import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
 public class GCMainActivity extends FragmentActivity {
+
+
     public static final String RESULT = "RESULT";
 
     private static final String TAG = "GCMainActivity";
@@ -63,19 +64,16 @@ public class GCMainActivity extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new GCPagerAdapter(getSupportFragmentManager(), NUM_PAGES);
         mPager.setAdapter(mPagerAdapter);
-        mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
+        mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
 
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Log.d(TAG, "scrolled" + position);
+
             }
 
             @Override
             public void onPageSelected(int position) {
-                Log.d(TAG, "selected" + position);
-                if(position == 0 && GCPreferences.getAccessToken() != GCPreferences.getDefaultAccessToken())
-                    onPageSelected(position + 1);
 
             }
 

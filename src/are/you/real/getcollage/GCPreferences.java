@@ -32,7 +32,6 @@ public class GCPreferences {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(ACCESS_TOKEN, accessToken);
         editor.commit();
-
         Bundle b = new Bundle();
         b.putInt(GCMainActivity.RESULT, -2);
         Message msg = new Message();
@@ -53,10 +52,6 @@ public class GCPreferences {
      */
     public static String getAccessToken() {
         return sharedPref.getString(ACCESS_TOKEN, DEFAULT_ACCESS_TOKEN);
-    }
-
-    public static String getDefaultAccessToken(){
-        return DEFAULT_ACCESS_TOKEN;
     }
 
 

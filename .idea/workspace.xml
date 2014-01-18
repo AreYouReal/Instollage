@@ -34,14 +34,6 @@
         <option name="packageNamePattern" value="" />
         <option name="pid" value="" />
       </filter>
-      <filter>
-        <option name="logLevel" value="verbose" />
-        <option name="logMessagePattern" value="" />
-        <option name="logTagPattern" value="GCMainActivity" />
-        <option name="name" value="GCMainActivity" />
-        <option name="packageNamePattern" value="" />
-        <option name="pid" value="" />
-      </filter>
     </filters>
   </component>
   <component name="AndroidLayoutPreviewToolWindow">
@@ -63,7 +55,7 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="getcollage" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27549be2-7d48-4a90-a024-6860c584da2a" name="Default" comment="" />
@@ -130,46 +122,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="strings.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="75" selection-start="457" selection-end="457" vertical-scroll-proportion="0.42857143" vertical-offset="0" max-vertical-offset="462">
+            <state line="9" column="4" selection-start="406" selection-end="454" vertical-scroll-proportion="-7.92" vertical-offset="0" max-vertical-offset="374">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GCMainActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/are/you/real/getcollage/GCMainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="46" selection-start="1181" selection-end="1181" vertical-scroll-proportion="0.0" vertical-offset="509" max-vertical-offset="2376">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#812#1592#0" expanded="true" />
-                <element signature="e#1318#1380#0" expanded="true" />
-                <element signature="e#1585#1586#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GCWebViewClient.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/are/you/real/getcollage/GCWebViewClient.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="37" selection-start="1139" selection-end="1139" vertical-scroll-proportion="0.0" vertical-offset="132" max-vertical-offset="1298">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GCPreferences.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/are/you/real/getcollage/GCPreferences.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="23" selection-start="1015" selection-end="1015" vertical-scroll-proportion="0.0" vertical-offset="410" max-vertical-offset="1474">
-              <folding>
-                <element signature="e#1819#1820#0" expanded="true" />
-                <element signature="e#1862#1863#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -186,12 +143,9 @@
       <file leaf-file-name="GCFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/are/you/real/getcollage/GCFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="59" selection-start="2076" selection-end="2076" vertical-scroll-proportion="0.0" vertical-offset="707" max-vertical-offset="2156">
+            <state line="93" column="23" selection-start="3993" selection-end="3993" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2090">
               <folding>
-                <element signature="e#2414#3196#0" expanded="true" />
-                <element signature="e#3177#3178#0" expanded="true" />
-                <element signature="e#3669#4136#0" expanded="true" />
-                <element signature="e#4117#4118#0" expanded="true" />
+                <element signature="e#3551#4011#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -200,11 +154,8 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="66" selection-start="291" selection-end="291" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="572">
-              <folding>
-                <element signature="e#366#384#0" expanded="true" />
-                <element signature="e#508#526#0" expanded="true" />
-              </folding>
+            <state line="20" column="29" selection-start="780" selection-end="780" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="572">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -220,7 +171,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="collage_screen.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="collage_screen.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/res/layout/collage_screen.xml">
           <provider selected="true" editor-type-id="android-designer">
             <state />
@@ -259,17 +210,17 @@
         <option value="$PROJECT_DIR$/src/are/you/real/getcollage/GCPagerAdapter.java" />
         <option value="$PROJECT_DIR$/src/are/you/real/getcollage/GCAppStaticData.java" />
         <option value="$PROJECT_DIR$/src/are/you/real/getcollage/GCApp.java" />
+        <option value="$PROJECT_DIR$/src/are/you/real/getcollage/GCWebViewClient.java" />
         <option value="$PROJECT_DIR$/res/layout/second_screen.xml" />
         <option value="$PROJECT_DIR$/src/are/you/real/getcollage/GCSession.java" />
-        <option value="$PROJECT_DIR$/res/values-ru/strings.xml" />
-        <option value="$PROJECT_DIR$/src/are/you/real/getcollage/GCImageAdapter.java" />
-        <option value="$PROJECT_DIR$/res/layout/collage_screen.xml" />
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/are/you/real/getcollage/GCPreferences.java" />
-        <option value="$PROJECT_DIR$/src/are/you/real/getcollage/GCWebViewClient.java" />
         <option value="$PROJECT_DIR$/src/are/you/real/getcollage/GCMainActivity.java" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/res/values-ru/strings.xml" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/are/you/real/getcollage/GCImageAdapter.java" />
         <option value="$PROJECT_DIR$/src/are/you/real/getcollage/GCFragment.java" />
+        <option value="$PROJECT_DIR$/res/layout/collage_screen.xml" />
       </list>
     </option>
   </component>
@@ -906,12 +857,12 @@
       <workItem from="1389928375337" duration="772000" />
       <workItem from="1389929955907" duration="11889000" />
       <workItem from="1389977058530" duration="1499000" />
-      <workItem from="1390015789535" duration="7230000" />
+      <workItem from="1390015789535" duration="3277000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34605000" />
+    <option name="totallyTimeSpent" value="30652000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-8" width="1696" height="1066" extended-state="6" />
@@ -933,7 +884,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31089744" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.42948717" sideWeight="0.4997965" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34508547" sideWeight="0.4997965" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -981,10 +932,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="56" selection-start="410" selection-end="410" vertical-scroll-proportion="0.0" vertical-offset="286" max-vertical-offset="2156">
           <folding>
-            <element signature="e#2414#3196#0" expanded="true" />
-            <element signature="e#3177#3178#0" expanded="true" />
-            <element signature="e#3669#4136#0" expanded="true" />
-            <element signature="e#4117#4118#0" expanded="true" />
+            <element signature="e#3551#4011#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1009,10 +957,7 @@
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="67" selection-start="705" selection-end="705" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="418">
-          <folding>
-            <element signature="e#366#384#0" expanded="true" />
-            <element signature="e#508#526#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1026,10 +971,7 @@
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="67" selection-start="705" selection-end="705" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="418">
-          <folding>
-            <element signature="e#366#384#0" expanded="true" />
-            <element signature="e#508#526#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1043,16 +985,20 @@
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="67" selection-start="705" selection-end="705" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="418">
-          <folding>
-            <element signature="e#366#384#0" expanded="true" />
-            <element signature="e#508#526#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="19" selection-start="213" selection-end="213" vertical-scroll-proportion="0.0" vertical-offset="95" max-vertical-offset="247">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="4" selection-start="406" selection-end="454" vertical-scroll-proportion="-7.92" vertical-offset="0" max-vertical-offset="374">
           <folding />
         </state>
       </provider>
@@ -1081,11 +1027,27 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="29" selection-start="780" selection-end="780" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="572">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/are/you/real/getcollage/GCImageAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="45" column="66" selection-start="1258" selection-end="1258" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1254">
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/are/you/real/getcollage/GCFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="93" column="23" selection-start="3993" selection-end="3993" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2090">
+          <folding>
+            <element signature="e#3551#4011#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1096,64 +1058,6 @@
       </provider>
       <provider editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="264">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="66" selection-start="291" selection-end="291" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="572">
-          <folding>
-            <element signature="e#366#384#0" expanded="true" />
-            <element signature="e#508#526#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/are/you/real/getcollage/GCPreferences.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="23" selection-start="1015" selection-end="1015" vertical-scroll-proportion="0.0" vertical-offset="410" max-vertical-offset="1474">
-          <folding>
-            <element signature="e#1819#1820#0" expanded="true" />
-            <element signature="e#1862#1863#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/are/you/real/getcollage/GCMainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="46" selection-start="1181" selection-end="1181" vertical-scroll-proportion="0.0" vertical-offset="509" max-vertical-offset="2376">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#812#1592#0" expanded="true" />
-            <element signature="e#1318#1380#0" expanded="true" />
-            <element signature="e#1585#1586#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/are/you/real/getcollage/GCWebViewClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="37" selection-start="1139" selection-end="1139" vertical-scroll-proportion="0.0" vertical-offset="132" max-vertical-offset="1298">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/are/you/real/getcollage/GCFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="59" selection-start="2076" selection-end="2076" vertical-scroll-proportion="0.0" vertical-offset="707" max-vertical-offset="2156">
-          <folding>
-            <element signature="e#2414#3196#0" expanded="true" />
-            <element signature="e#3177#3178#0" expanded="true" />
-            <element signature="e#3669#4136#0" expanded="true" />
-            <element signature="e#4117#4118#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="75" selection-start="457" selection-end="457" vertical-scroll-proportion="0.42857143" vertical-offset="0" max-vertical-offset="462">
           <folding />
         </state>
       </provider>
