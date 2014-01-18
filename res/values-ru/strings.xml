@@ -7,4 +7,5 @@
     <string name="hint">Введите ник пользователя</string>
     <string name="btn_text">Давай Коллаж!</string>
     <string name="error_too_short_username">Слишком короткий ник</string>
+    <string name="send_to_mail">Отправить на почту (России?:))</string>
 </resources>

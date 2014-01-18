@@ -1,5 +1,6 @@
 package are.you.real.getcollage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,10 +12,7 @@ import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 /**
  * Created by AreYouReal on 17/01/14.
@@ -81,12 +79,26 @@ public class GCFragment extends Fragment {
                     }
                 });
                 return rootView;
+            case 2:
+                ViewGroup collageView = (ViewGroup) inflater.inflate(R.layout.collage_screen, container, false);
+                GridView grid = (GridView) collageView.findViewById(R.id.collage_grid);
+                grid.setAdapter(new GCImageAdapter(getActivity().getBaseContext()));
+                Button button = (Button) collageView.findViewById(R.id.send_btn);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                        emailIntent.setType("text/plain");
+                        emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getActivity().getBaseContext().startActivity(emailIntent);
+                    }
+                });
+                return collageView;
 
             default:
                 TextView tv = new TextView(getActivity().getBaseContext());
                 tv.setText("Page# " + numOfPage);
                 return tv;
-
         }
     }
 }
