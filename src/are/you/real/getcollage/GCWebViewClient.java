@@ -11,13 +11,13 @@ import android.webkit.WebViewClient;
 /**
  * Created by AreYouReal on 17/01/14.
  */
-class GCWebVIewClient extends WebViewClient {
+class GCWebViewClient extends WebViewClient {
 
     private static final String TAG = "GCWebViewClient";
 
     private ProgressDialog mProgress;
 
-    GCWebVIewClient(Context context){
+    GCWebViewClient(Context context){
         super();
         mProgress = new ProgressDialog(context);
         mProgress.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -30,12 +30,12 @@ class GCWebVIewClient extends WebViewClient {
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         Log.d(TAG, "Redirect URL: " + url);
 
-        if(url.startsWith("instagram://connect")){
+/*        if(url.startsWith("instagram://connect")){
             String urls[] = url.split("=");
             Log.d(TAG, "TOKEN: " + urls[1]);
             GCPreferences.setAccessToken(urls[1]);
             return true;
-        }
+        }*/
         return false;
     }
 

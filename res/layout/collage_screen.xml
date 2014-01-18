@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <GridView
+            android:layout_width="wrap_content"
+            android:layout_height="447dp"
+            android:id="@+id/collage_grid" android:layout_gravity="center_horizontal" android:numColumns="3"
+            android:drawSelectorOnTop="false"/>
+    <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/send_to_mail"
+            android:id="@+id/send_btn" android:layout_gravity="center_horizontal" android:gravity="center_horizontal|bottom"
+            android:clickable="false" android:layout_margin="20dp" android:longClickable="true" android:padding="10dp"/>
+</LinearLayout>
