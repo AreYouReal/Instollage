@@ -19,7 +19,7 @@ public class GCMainActivity extends FragmentActivity {
 
     private static final String TAG = "GCMainActivity";
 
-    private static final int NUM_PAGES = 4;
+    private static final int NUM_PAGES = 3;
     private enum PAGES{FIRST_PAGE, SECOND_PAGE, THIRD_PAGE, FOURTH_PAGE};
 
     private ViewPager       mPager;
@@ -36,7 +36,7 @@ public class GCMainActivity extends FragmentActivity {
 
             switch(result){
                 case -2:
-                    mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
+                    mPager.setCurrentItem(PAGES.FOURTH_PAGE.ordinal());
                     return true;
                 case -1:
                     mProgress = new ProgressDialog(GCMainActivity.this);
@@ -49,15 +49,15 @@ public class GCMainActivity extends FragmentActivity {
                 case 1:
                     if(mProgress != null && mProgress.isShowing()){
                     mProgress.dismiss();
-                    mPager.setCurrentItem(PAGES.THIRD_PAGE.ordinal());
+                    mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
                     mImageAdapter.notifyDataSetChanged();
                     }
                     return true;
                 case 2:
-                    mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
+                    mPager.setCurrentItem(PAGES.FOURTH_PAGE.ordinal());
                     return true;
                 case 3:
-                    mPager.setCurrentItem(PAGES.FOURTH_PAGE.ordinal());
+                    mPager.setCurrentItem(PAGES.THIRD_PAGE.ordinal());
                     return true;
                 case 666:
                     mProgress.dismiss();
@@ -89,7 +89,7 @@ public class GCMainActivity extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new GCPagerAdapter(getSupportFragmentManager(), NUM_PAGES);
         mPager.setAdapter(mPagerAdapter);
-        mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
+        mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
 
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

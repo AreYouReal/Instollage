@@ -58,7 +58,7 @@ public class GCFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         switch (numOfPage){
-            case 0:
+            case 3:
                 WebView wv;
                 wv = new WebView(mContext);
                 wv.setWebViewClient(new GCWebViewClient(mContext));
@@ -70,7 +70,7 @@ public class GCFragment extends Fragment {
                 Log.v(TAG, "Container " + container);
                 return wv;
 
-            case 1:
+            case 0:
                 ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.user_selecting_screen, container, false);
                 final EditText usernameText = (EditText)rootView.findViewById(R.id.user_name);
                 Button btn = (Button) rootView.findViewById(R.id.button);
@@ -90,7 +90,7 @@ public class GCFragment extends Fragment {
                     }
                 });
                 return rootView;
-            case 2:
+            case 1:
                 ViewGroup collageView = (ViewGroup) inflater.inflate(R.layout.best_images_screen, container, false);
                 GridView grid = (GridView) collageView.findViewById(R.id.collage_grid);
                 grid.setAdapter(mImageAdapter);
@@ -129,7 +129,7 @@ public class GCFragment extends Fragment {
                 });
                 return collageView;
 
-            case 3:
+            case 2:
                 ViewGroup collage = (ViewGroup) inflater.inflate(R.layout.collage_screen, container, false);
                 im = (ImageView) collage.findViewById(R.id.collage_image);
                 if(GCCollageCreator.createCollage() != null)
