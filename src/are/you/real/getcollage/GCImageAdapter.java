@@ -41,11 +41,7 @@ public class GCImageAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         FrameLayout rl;
-        if (convertView == null) {  // if it's not recycled, initialize some attributes
-            rl = new FrameLayout(mContext);
-        } else {
-            rl = (FrameLayout) convertView;
-        }
+        rl = new FrameLayout(mContext);
 
         ImageView im = new ImageView(mContext);
         ProgressBar progress = new ProgressBar(mContext);

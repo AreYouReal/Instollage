@@ -99,7 +99,12 @@ public class GCFragment extends Fragment {
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                         GCPreferences.setCheckedGridCell(position, !GCPreferences.getCheckedCell(position));
                         Log.d(TAG, position + "\t" + view + "\t" + GCPreferences.getCheckedCell(position));
-                        mImageAdapter.notifyDataSetChanged();
+
+                        if(GCPreferences.getCheckedCell(position))
+                            view.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_blue_light));
+                        else
+                            view.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
+
                         return false;
                     }
                 });

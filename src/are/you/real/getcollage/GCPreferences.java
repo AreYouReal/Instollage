@@ -153,7 +153,6 @@ public class GCPreferences {
     public static void putBitmap(String url, Bitmap bmp){
         if(bitmaps.get(url) == null)
             bitmaps.put(url, bmp);
-        Log.d(TAG, "" + bitmaps.size());
         if(bitmaps.size() == 20)
             allBestÍmagesWereDownloaded = true;
     }
@@ -172,6 +171,30 @@ public class GCPreferences {
             returnValue.add(bmp);
         }
         return returnValue;
+    }
+
+    public static ArrayList<Bitmap> getSelectedList(){
+        ArrayList<Bitmap> returnValue = new ArrayList<Bitmap>();
+        for(int i = 0; i < imagesUrlsArr.length; i++){
+            if(checkedGridCell[i]){
+                returnValue.add(bitmaps.get(imagesUrlsArr[i]));
+            }
+        }
+
+        for(int i = 0; i < returnValue.size(); i++){
+            Log.d(TAG, "" + returnValue.get(i));
+        }
+        Log.d(TAG, "" + returnValue.size());
+
+        return returnValue;
+    }
+
+    public static boolean isAnyPhotoIsChecked(){
+        for(int i = 0; i < checkedGridCell.length; i++){
+            if(checkedGridCell[i])
+                return true;
+        }
+        return false;
     }
 
 

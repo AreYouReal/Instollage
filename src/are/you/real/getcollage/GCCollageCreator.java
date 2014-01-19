@@ -20,6 +20,9 @@ public class GCCollageCreator {
         if(collage != null)
             return collage;
 
+        if(GCPreferences.isAnyPhotoIsChecked())
+            return createSelectedCollage();
+
         ArrayList<Bitmap> bitmaps = GCPreferences.getBmpList();
 
         Bitmap bitmap = Bitmap.createBitmap(bitmaps.get(0).getWidth() * 5, bitmaps.get(0).getWidth() * 4, Bitmap.Config.ARGB_8888);
@@ -49,6 +52,28 @@ public class GCCollageCreator {
         collage = null;
     }
 
+    private static Bitmap createSelectedCollage(){
+        ArrayList<Bitmap> checkedBitmaps = GCPreferences.getSelectedList();
+        Bitmap bitmap = Bitmap.createBitmap(checkedBitmaps.get(0).getWidth() * 5, checkedBitmaps.get(0).getWidth() * 4, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+
+        int horizontalCoef = checkedBitmaps.size() / 2;
+        int left = 0, top = 0;
+        for(Bitmap bmp: checkedBitmaps){
+            if(left >= horizontalCoef * bmp.getWidth()){
+                left = 0;
+                top += bmp.getHeight();
+            }
+            if(top >= 999 /* :) */ * bmp.getHeight())
+                top = 0;
+            canvas.drawBitmap(bmp, left, top, null);
+            left += bmp.getWidth();
+        }
+
+        collage = bitmap;
+        return collage;
+    }
 
 
 }
