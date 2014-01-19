@@ -126,6 +126,8 @@ public class GCFragment extends Fragment {
             case 3:
                 ViewGroup collage = (ViewGroup) inflater.inflate(R.layout.collage_screen, container, false);
                 im = (ImageView) collage.findViewById(R.id.collage_image);
+                if(GCCollageCreator.createCollage() != null)
+                    im.setImageBitmap(GCCollageCreator.createCollage());
                 Button button = (Button) collage.findViewById(R.id.sen_to_mail_btn);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -24,7 +24,5 @@ public class GCImageView extends ImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(GCCollageCreator.createCollage() != null)
-            canvas.drawBitmap(GCCollageCreator.createCollage(), 0, 0, null);
     }
 }
