@@ -43,6 +43,12 @@ public class GCCollageCreator {
         return collage;
     }
 
+    public static void clear(){
+        if(collage != null)
+            collage.recycle();
+        collage = null;
+    }
+
 
 
 }

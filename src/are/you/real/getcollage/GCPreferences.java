@@ -114,10 +114,6 @@ public class GCPreferences {
                 }
             }
         }
-        /*
-        for(String s: imagesUrlsArr){
-            Log.d(TAG, s);
-        }*/
         Bundle b = new Bundle();
         b.putInt(GCMainActivity.RESULT, 1);
         Message msg = new Message();

@@ -107,6 +107,7 @@ public class GCFragment extends Fragment {
                 create_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        GCCollageCreator.clear();
                         Bitmap bmp = GCCollageCreator.createCollage();
                         Log.d(TAG, "" + bmp);
                         if(im != null){
