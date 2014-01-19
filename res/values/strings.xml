@@ -11,4 +11,5 @@
     <string name="something_went_wrong">Something went wrong:(</string>
     <string name="get_best_images">Get best user\'s images</string>
     <string name="nothing_to_send">Sorry, there is nothing to send yet...</string>
+    <string name="long_tap_hint">Hint: Long Tap to select "The best of the Best"</string>
 </resources>

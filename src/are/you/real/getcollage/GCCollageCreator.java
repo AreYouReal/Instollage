@@ -54,11 +54,27 @@ public class GCCollageCreator {
 
     private static Bitmap createSelectedCollage(){
         ArrayList<Bitmap> checkedBitmaps = GCPreferences.getSelectedList();
-        Bitmap bitmap = Bitmap.createBitmap(checkedBitmaps.get(0).getWidth() * 5, checkedBitmaps.get(0).getWidth() * 4, Bitmap.Config.ARGB_8888);
+        int horizontalCoef = 2;
+        if(checkedBitmaps.size() >= 6)
+            horizontalCoef = checkedBitmaps.size() / 3;
+        if(checkedBitmaps.size() > 12)
+            horizontalCoef = checkedBitmaps.size() / 4;
+
+        int verticalCoef = ((checkedBitmaps.size() / 2) - horizontalCoef);
+        if(verticalCoef == 0)
+            verticalCoef = horizontalCoef;
+        if(verticalCoef < 0)
+            verticalCoef = -verticalCoef;
+
+        Bitmap bitmap = Bitmap.createBitmap(checkedBitmaps.get(0).getWidth() * horizontalCoef,
+                checkedBitmaps.get(0).getHeight() * verticalCoef,
+                Bitmap.Config.ARGB_8888);
 
         Canvas canvas = new Canvas(bitmap);
 
-        int horizontalCoef = checkedBitmaps.size() / 2;
+
+
+
         int left = 0, top = 0;
         for(Bitmap bmp: checkedBitmaps){
             if(left >= horizontalCoef * bmp.getWidth()){
