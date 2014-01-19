@@ -55,26 +55,21 @@ public class GCSession {
                     Log.d(TAG, "ID: " + id);
                     GCPreferences.setUserId(id);
                     getUserImages();
-                } catch (MalformedURLException e) {
+                }  catch (Exception e) {
                     Log.e(TAG, e.toString());
                     e.printStackTrace();
-                } catch (IOException e) {
-                    Log.e(TAG, e.toString());
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    Log.e(TAG, e.toString());
-                    e.printStackTrace();
+                    Bundle b = new Bundle();
+                    b.putInt(GCMainActivity.RESULT, 666);
+                    Message msg = new Message();
+                    msg.setData(b);
+                    mHandler.sendMessage(msg);
                 }
-                Bundle b = new Bundle();
-                b.putInt(GCMainActivity.RESULT, 1);
-                Message msg = new Message();
-                msg.setData(b);
-                mHandler.sendMessage(msg);
             }
         }.start();
     }
 
     public static void getUserImages(){
+        GCPreferences.clearImageUrlArr();
         new Thread(){
             @Override
             public void run() {
@@ -107,21 +102,15 @@ public class GCSession {
                         }
                     }while(stringUrl != null);
                     GCPreferences.findTheBestImages();
-                } catch (MalformedURLException e) {
+                } catch (Exception e) {
                     Log.e(TAG, e.toString());
                     e.printStackTrace();
-                } catch (IOException e) {
-                    Log.e(TAG, e.toString());
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    Log.e(TAG, e.toString());
-                    e.printStackTrace();
+                    Bundle b = new Bundle();
+                    b.putInt(GCMainActivity.RESULT, 666);
+                    Message msg = new Message();
+                    msg.setData(b);
+                    mHandler.sendMessage(msg);
                 }
-                Bundle b = new Bundle();
-                b.putInt(GCMainActivity.RESULT, 1);
-                Message msg = new Message();
-                msg.setData(b);
-                mHandler.sendMessage(msg);
             }
         }.start();
     }

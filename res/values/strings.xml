@@ -5,7 +5,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="hint">Enter the username</string>
-    <string name="btn_text">Get Collage!</string>
+    <string name="get_collage">Get Collage!</string>
     <string name="error_too_short_username">Too short username</string>
     <string name="send_to_mail">Send e-mail</string>
+    <string name="something_went_wrong">Something went wrong:(</string>
+    <string name="get_best_images">Get best user\'s images</string>
 </resources>

@@ -7,8 +7,11 @@ import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.Toast;
 
 public class GCMainActivity extends FragmentActivity {
 
@@ -16,11 +19,12 @@ public class GCMainActivity extends FragmentActivity {
 
     private static final String TAG = "GCMainActivity";
 
-    private static final int NUM_PAGES = 3;
-    private enum PAGES{FIRST_PAGE, SECOND_PAGE, THIRD_PAGE};
+    private static final int NUM_PAGES = 4;
+    private enum PAGES{FIRST_PAGE, SECOND_PAGE, THIRD_PAGE, FOURTH_PAGE};
 
     private ViewPager       mPager;
     private PagerAdapter    mPagerAdapter;
+    private GCImageAdapter  mImageAdapter;
 
     private ProgressDialog mProgress;
 
@@ -29,21 +33,37 @@ public class GCMainActivity extends FragmentActivity {
         @Override
         public boolean handleMessage(Message message) {
             int result = message.getData().getInt(RESULT);
-            if(result == 1){
-                if(mProgress != null && mProgress.isShowing()){
-                    mProgress.dismiss();
-                    mPager.setCurrentItem(2);
-                }
-            }
-            if(result == -1){
-                mProgress = new ProgressDialog(GCMainActivity.this);
-                mProgress.setMessage(GCMainActivity.this.getResources().getString(R.string.loading));
-                mProgress.setCancelable(false);
-                mProgress.show();
-            }
-            if(result == -2)
-                mPager.setCurrentItem(1);
 
+            switch(result){
+                case -2:
+                    mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
+                    return true;
+                case -1:
+                    mProgress = new ProgressDialog(GCMainActivity.this);
+                    mProgress.setTitle("Fetching user info");
+                    mProgress.setMessage(GCMainActivity.this.getResources().getString(R.string.loading));
+                    mProgress.setCancelable(false);
+                    mProgress.setIcon(android.R.drawable.ic_menu_camera);
+                    mProgress.show();
+                    return true;
+                case 1:
+                    if(mProgress != null && mProgress.isShowing()){
+                    mProgress.dismiss();
+                    mPager.setCurrentItem(PAGES.THIRD_PAGE.ordinal());
+                    mImageAdapter.notifyDataSetChanged();
+                    }
+                    return true;
+                case 2:
+                    mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
+                    return true;
+                case 3:
+                    mPager.setCurrentItem(PAGES.FOURTH_PAGE.ordinal());
+                    return true;
+                case 666:
+                    mProgress.dismiss();
+                    Toast.makeText(GCMainActivity.this, getResources().getText(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                    return true;
+            }
             return false;
         }
     });
@@ -54,16 +74,22 @@ public class GCMainActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_pager);
+
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        setContentView(R.layout.pager);
+
+        mImageAdapter = new GCImageAdapter(this);
 
         GCPreferences.init(this, mHandler);
         GCSession.init(mHandler);
-        GCFragment.init(this, mHandler);
+        GCFragment.init(this, mHandler, mImageAdapter);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new GCPagerAdapter(getSupportFragmentManager(), NUM_PAGES);
         mPager.setAdapter(mPagerAdapter);
-        mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
+        mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
 
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

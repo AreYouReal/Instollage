@@ -2,6 +2,7 @@ package are.you.real.getcollage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,6 +30,9 @@ public class GCPreferences {
 
     private static final TreeMap<Integer, List<String>> imagesMap = new TreeMap<Integer, List<String>>(Collections.reverseOrder());
     private static String[] imagesUrlsArr = new String[20];
+    private static boolean[] checkedGridCell = new boolean[20];
+    private static HashMap<String, Bitmap> bitmaps = new HashMap<String, Bitmap>(20);
+    private static boolean allBestÍmagesWereDownloaded = false;
 
     private static Handler mHandler;
 
@@ -110,6 +114,15 @@ public class GCPreferences {
                 }
             }
         }
+        /*
+        for(String s: imagesUrlsArr){
+            Log.d(TAG, s);
+        }*/
+        Bundle b = new Bundle();
+        b.putInt(GCMainActivity.RESULT, 1);
+        Message msg = new Message();
+        msg.setData(b);
+        mHandler.sendMessage(msg);
     }
 
     public static String getImageUrl(int position){
@@ -118,4 +131,53 @@ public class GCPreferences {
 
         return imagesUrlsArr[position];
     }
+
+    public static void clearImageUrlArr(){
+        imagesMap.clear();
+        imagesUrlsArr = new String[20];
+        clearCheckedState();
+        bitmaps.clear();
+        allBestÍmagesWereDownloaded = false;
+    }
+
+    public static void setCheckedGridCell(int cellNum, boolean checked){
+        if(cellNum < 0 && cellNum > checkedGridCell.length)
+            return;
+        checkedGridCell[cellNum] = checked;
+    }
+
+    public static boolean getCheckedCell(int cellNum){
+        return checkedGridCell[cellNum];
+    }
+
+    private static void clearCheckedState(){
+        checkedGridCell = new boolean[20];
+    }
+
+    public static void putBitmap(String url, Bitmap bmp){
+        if(bitmaps.get(url) == null)
+            bitmaps.put(url, bmp);
+        Log.d(TAG, "" + bitmaps.size());
+        if(bitmaps.size() == 20)
+            allBestÍmagesWereDownloaded = true;
+    }
+
+    public static boolean areAllBestImagesDownloaded(){
+        return allBestÍmagesWereDownloaded;
+    }
+
+    public static ArrayList<Bitmap> getBmpList(){
+       ArrayList<Bitmap> returnValue = new ArrayList<Bitmap>(20);
+       Set set = bitmaps.entrySet();
+       Iterator it =  set.iterator();
+        while(it.hasNext()){
+            Map.Entry<String, Bitmap> entry = (Map.Entry<String, Bitmap>)it.next();
+            Bitmap bmp = entry.getValue();
+            returnValue.add(bmp);
+        }
+        return returnValue;
+    }
+
+
+
 }

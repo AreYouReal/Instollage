@@ -2,19 +2,23 @@ package are.you.real.getcollage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
+import android.view.*;
 import android.webkit.WebView;
 import android.widget.*;
-import com.androidquery.AQuery;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 /**
  * Created by AreYouReal on 17/01/14.
@@ -25,12 +29,15 @@ public class GCFragment extends Fragment {
 
     private static Context mContext;
     private static Handler mHandler;
+    private static GCImageAdapter mImageAdapter;
+    private static ImageView im;
 
     private int numOfPage;
 
-    public static void init(Context context, Handler handler){
+    public static void init(Context context, Handler handler, GCImageAdapter imageAdapter){
         mHandler = handler;
         mContext = context;
+        mImageAdapter = imageAdapter;
     }
 
 
@@ -50,8 +57,6 @@ public class GCFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        // TODO: make switch
         switch (numOfPage){
             case 0:
                 WebView wv;
@@ -66,7 +71,7 @@ public class GCFragment extends Fragment {
                 return wv;
 
             case 1:
-                ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.second_screen, container, false);
+                ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.user_selecting_screen, container, false);
                 final EditText usernameText = (EditText)rootView.findViewById(R.id.user_name);
                 Button btn = (Button) rootView.findViewById(R.id.button);
                 btn.setOnClickListener(new View.OnClickListener() {
@@ -86,25 +91,84 @@ public class GCFragment extends Fragment {
                 });
                 return rootView;
             case 2:
-                ViewGroup collageView = (ViewGroup) inflater.inflate(R.layout.collage_screen, container, false);
+                ViewGroup collageView = (ViewGroup) inflater.inflate(R.layout.best_images_screen, container, false);
                 GridView grid = (GridView) collageView.findViewById(R.id.collage_grid);
-                grid.setAdapter(new GCImageAdapter(mContext));
-                Button button = (Button) collageView.findViewById(R.id.send_btn);
-                button.setOnClickListener(new View.OnClickListener() {
+                grid.setAdapter(mImageAdapter);
+                grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        GCPreferences.setCheckedGridCell(position, !GCPreferences.getCheckedCell(position));
+                        Log.d(TAG, position + "\t" + view + "\t" + GCPreferences.getCheckedCell(position));
+                        mImageAdapter.notifyDataSetChanged();
+                        return false;
+                    }
+                });
+                Button create_btn = (Button) collageView.findViewById(R.id.create_collage_btn);
+                create_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-                        emailIntent.setType("text/plain");
-                        emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mContext.startActivity(emailIntent);
+                        Bitmap bmp = GCCollageCreator.createCollage();
+                        Log.d(TAG, "" + bmp);
+                        if(im != null){
+                            im.setImageBitmap(bmp);
+                            im.invalidate();
+                            Log.d(TAG, "Set bmp and invalidate");
+                        }
+                        Bundle b = new Bundle();
+                        b.putInt(GCMainActivity.RESULT, 3);
+                        Message msg = new Message();
+                        msg.setData(b);
+                        mHandler.sendMessage(msg);
                     }
                 });
                 return collageView;
 
+            case 3:
+                ViewGroup collage = (ViewGroup) inflater.inflate(R.layout.collage_screen, container, false);
+                im = (ImageView) collage.findViewById(R.id.collage_image);
+                Button button = (Button) collage.findViewById(R.id.sen_to_mail_btn);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        File  mFile = savebitmap(GCCollageCreator.createCollage());
+
+                        Uri u = null;
+                        u = Uri.fromFile(mFile);
+
+                        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                        emailIntent.setType("image/*");
+                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Hello...");
+                        // + "\n\r" + "\n\r" +
+                        // feed.get(Selectedposition).DETAIL_OBJECT.IMG_URL
+                        emailIntent.putExtra(Intent.EXTRA_TEXT, "Your tsxt here");
+                        emailIntent.putExtra(Intent.EXTRA_STREAM, u);
+                        startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                    }
+                });
+                return collage;
             default:
-                TextView tv = new TextView(mContext);
-                tv.setText("Page# " + numOfPage);
-                return tv;
+                return new Button(mContext);
         }
+    }
+
+    private File savebitmap(Bitmap bmp) {
+        String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+        OutputStream outStream = null;
+        File file = new File(extStorageDirectory, "sendCollage.png");
+        if (file.exists()) {
+            file.delete();
+            file = new File(extStorageDirectory,"sendCollage.png");
+        }
+
+        try {
+            outStream = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+            outStream.flush();
+            outStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return file;
     }
 }
