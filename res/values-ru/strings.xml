@@ -10,4 +10,5 @@
     <string name="send_to_mail">Отправить на почту (России?:))</string>
     <string name="something_went_wrong">Что-то пошло не так:(</string>
     <string name="get_best_images">Давай лучшие фото!</string>
+    <string name="nothing_to_send">Пока нечего отправлять, Друг:)</string>
 </resources>

@@ -133,6 +133,10 @@ public class GCFragment extends Fragment {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(GCCollageCreator.createCollage() == null){
+                            Toast.makeText(mContext, mContext.getResources().getString(R.string.nothing_to_send), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         File  mFile = savebitmap(GCCollageCreator.createCollage());
 
                         Uri u = null;
