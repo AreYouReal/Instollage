@@ -17,8 +17,8 @@
             android:id="@+id/collage_grid" android:layout_gravity="center_horizontal" android:numColumns="3"
             android:drawSelectorOnTop="false" android:background="#ffffff" android:padding="10dp"
             android:smoothScrollbar="true" android:scrollingCache="true"
-            android:longClickable="false" android:clickable="false" android:verticalSpacing="10dp"
-            android:stretchMode="columnWidth" android:layout_weight="1"/>
+            android:longClickable="false" android:clickable="false" android:verticalSpacing="0dp"
+            android:stretchMode="columnWidth" android:layout_weight="1" android:stackFromBottom="false"/>
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

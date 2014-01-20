@@ -12,4 +12,6 @@
     <string name="get_best_images">Давай лучшие фото!</string>
     <string name="nothing_to_send">Пока нечего отправлять, Друг:)</string>
     <string name="long_tap_hint">Подсказка: Длительное нажатие для выделения "Лучших из Лучших"</string>
+    <string name="fetching_user_info">Получение данных пользователя</string>
+    <string name="no_sd_card">Похоже, у Вас нет SD карточки на устройстве:(</string>
 </resources>

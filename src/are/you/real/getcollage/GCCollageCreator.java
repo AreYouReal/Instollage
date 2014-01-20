@@ -60,7 +60,7 @@ public class GCCollageCreator {
         if(checkedBitmaps.size() > 12)
             horizontalCoef = checkedBitmaps.size() / 4;
 
-        int verticalCoef = ((checkedBitmaps.size() / 2) - horizontalCoef);
+        int verticalCoef = (checkedBitmaps.size() - horizontalCoef);
         if(verticalCoef == 0)
             verticalCoef = horizontalCoef;
         if(verticalCoef < 0)

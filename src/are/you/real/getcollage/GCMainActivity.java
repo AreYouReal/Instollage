@@ -40,7 +40,7 @@ public class GCMainActivity extends FragmentActivity {
                     return true;
                 case -1:
                     mProgress = new ProgressDialog(GCMainActivity.this);
-                    mProgress.setTitle("Fetching user info");
+                    mProgress.setTitle(GCMainActivity.this.getResources().getString(R.string.fetching_user_info));
                     mProgress.setMessage(GCMainActivity.this.getResources().getString(R.string.loading));
                     mProgress.setCancelable(false);
                     mProgress.setIcon(android.R.drawable.ic_menu_camera);

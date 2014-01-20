@@ -144,14 +144,15 @@ public class GCFragment extends Fragment {
                         }
                         File  mFile = savebitmap(GCCollageCreator.createCollage());
 
+                        if(mFile == null){
+                            Toast.makeText(mContext, getResources().getString(R.string.no_sd_card), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         Uri u = null;
                         u = Uri.fromFile(mFile);
-
                         Intent emailIntent = new Intent(Intent.ACTION_SEND);
                         emailIntent.setType("image/*");
                         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Hello...");
-                        // + "\n\r" + "\n\r" +
-                        // feed.get(Selectedposition).DETAIL_OBJECT.IMG_URL
                         emailIntent.putExtra(Intent.EXTRA_TEXT, "Your tsxt here");
                         emailIntent.putExtra(Intent.EXTRA_STREAM, u);
                         startActivity(Intent.createChooser(emailIntent, "Send email..."));
@@ -178,6 +179,7 @@ public class GCFragment extends Fragment {
             outStream.flush();
             outStream.close();
         } catch (Exception e) {
+            Log.e(TAG, e.toString());
             e.printStackTrace();
             return null;
         }
