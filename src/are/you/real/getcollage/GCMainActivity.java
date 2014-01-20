@@ -35,8 +35,19 @@ public class GCMainActivity extends FragmentActivity {
             int result = message.getData().getInt(RESULT);
 
             switch(result){
+                case -4:
+                    Toast.makeText(GCMainActivity.this, getResources().getText(R.string.nothing_to_send), Toast.LENGTH_SHORT).show();
+                    return true;
+                case -3:
+                    mProgress = new ProgressDialog(GCMainActivity.this);
+                    mProgress.setTitle(GCMainActivity.this.getResources().getString(R.string.generating_image));
+                    mProgress.setMessage(GCMainActivity.this.getResources().getString(R.string.loading));
+                    mProgress.setCancelable(false);
+                    mProgress.setIcon(android.R.drawable.picture_frame);
+                    mProgress.show();
+                    return true;
                 case -2:
-                    mPager.setCurrentItem(PAGES.FOURTH_PAGE.ordinal());
+                    mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
                     return true;
                 case -1:
                     mProgress = new ProgressDialog(GCMainActivity.this);
@@ -48,9 +59,9 @@ public class GCMainActivity extends FragmentActivity {
                     return true;
                 case 1:
                     if(mProgress != null && mProgress.isShowing()){
-                    mProgress.dismiss();
-                    mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
-                    mImageAdapter.notifyDataSetChanged();
+                        mProgress.dismiss();
+                        mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
+                        mImageAdapter.notifyDataSetChanged();
                     }
                     return true;
                 case 2:
@@ -58,6 +69,11 @@ public class GCMainActivity extends FragmentActivity {
                     return true;
                 case 3:
                     mPager.setCurrentItem(PAGES.THIRD_PAGE.ordinal());
+                    return true;
+                case 4:
+                    if(mProgress != null && mProgress.isShowing()){
+                        mProgress.dismiss();
+                    }
                     return true;
                 case 666:
                     mProgress.dismiss();

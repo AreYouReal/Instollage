@@ -15,6 +15,7 @@ public class GCCollageCreator {
     private static Bitmap collage = null;
 
     public static Bitmap createCollage(){
+        // TODO: Create several collage possibilities
         if(!GCPreferences.areAllBestImagesDownloaded())
             return null;
         if(collage != null)
@@ -53,14 +54,16 @@ public class GCCollageCreator {
     }
 
     private static Bitmap createSelectedCollage(){
+        // TODO: Create several collage possibilities
         ArrayList<Bitmap> checkedBitmaps = GCPreferences.getSelectedList();
-        int horizontalCoef = 2;
-        if(checkedBitmaps.size() >= 6)
+        int horizontalCoef = 3;
+        int someMagicNumber = horizontalCoef;
+        if(checkedBitmaps.size() >= 6){
             horizontalCoef = checkedBitmaps.size() / 3;
-        if(checkedBitmaps.size() > 12)
-            horizontalCoef = checkedBitmaps.size() / 4;
+            someMagicNumber = checkedBitmaps.size();
+        }
 
-        int verticalCoef = (checkedBitmaps.size() - horizontalCoef);
+        int verticalCoef = (someMagicNumber - horizontalCoef);
         if(verticalCoef == 0)
             verticalCoef = horizontalCoef;
         if(verticalCoef < 0)

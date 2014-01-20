@@ -34,6 +34,7 @@ class GCWebViewClient extends WebViewClient {
             String urls[] = url.split("=");
             Log.d(TAG, "TOKEN: " + urls[1]);
             GCPreferences.setAccessToken(urls[1]);
+            // TODO: Send message to handler was here...
             return true;
         }
         return false;

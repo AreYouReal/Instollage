@@ -1,5 +1,6 @@
 package are.you.real.getcollage;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -138,24 +139,56 @@ public class GCFragment extends Fragment {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(GCCollageCreator.createCollage() == null){
-                            Toast.makeText(mContext, mContext.getResources().getString(R.string.nothing_to_send), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        File  mFile = savebitmap(GCCollageCreator.createCollage());
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                if(GCCollageCreator.createCollage() == null){
+                                    /** Nothing to send :( */
+                                    Bundle b1 = new Bundle();
+                                    b1.putInt(GCMainActivity.RESULT, -4);
+                                    Message msg1 = new Message();
+                                    msg1.setData(b1);
+                                    mHandler.sendMessage(msg1);
+                                    return;
+                                }
 
-                        if(mFile == null){
-                            Toast.makeText(mContext, getResources().getString(R.string.no_sd_card), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        Uri u = null;
-                        u = Uri.fromFile(mFile);
-                        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                        emailIntent.setType("image/*");
-                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Hello...");
-                        emailIntent.putExtra(Intent.EXTRA_TEXT, "Your tsxt here");
-                        emailIntent.putExtra(Intent.EXTRA_STREAM, u);
-                        startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                                Bundle b = new Bundle();
+                                b.putInt(GCMainActivity.RESULT, -3);
+                                Message msg = new Message();
+                                msg.setData(b);
+                                mHandler.sendMessage(msg);
+
+                                File  mFile = savebitmap(GCCollageCreator.createCollage());
+
+                                if(mFile == null){
+                                    Bundle b1 = new Bundle();
+                                    b1.putInt(GCMainActivity.RESULT, 666);
+                                    Message msg1 = new Message();
+                                    msg1.setData(b1);
+                                    mHandler.sendMessage(msg1);
+                                    return;
+                                }
+
+                                Uri u = null;
+                                u = Uri.fromFile(mFile);
+                                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                                emailIntent.setType("image/*");
+                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Hello...");
+                                emailIntent.putExtra(Intent.EXTRA_TEXT, "Your tsxt here");
+                                emailIntent.putExtra(Intent.EXTRA_STREAM, u);
+                                startActivity(Intent.createChooser(emailIntent, "Send email..."));
+
+                                Log.d(TAG, "Start new intent was");
+
+                                Bundle b2 = new Bundle();
+                                b2.putInt(GCMainActivity.RESULT, 4);
+                                Message msg2 = new Message();
+                                msg2.setData(b2);
+                                mHandler.sendMessage(msg2);
+
+                            }
+                        }.start();
+
                     }
                 });
                 return collage;
