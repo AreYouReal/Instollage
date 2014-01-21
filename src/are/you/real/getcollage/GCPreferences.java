@@ -47,6 +47,8 @@ public class GCPreferences {
     public static final int MSG_PROGRESS_DIALOG_DISMISS = 8;
     public static final int MSG_ERROR = 9;
 
+    private static int requestCounter = 0;
+
     public static void init(Context context, Handler handler){
         if(sharedPref == null){
             sharedPref  = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -209,6 +211,17 @@ public class GCPreferences {
         return bitmaps.size() != 0;
     }
 
+    public static void refreshRequestCounter(){
+        requestCounter = 0;
+    }
+
+    public static void increseRequestCounter(){
+        requestCounter++;
+    }
+
+    public static int getRequestCounter(){
+        return requestCounter;
+    }
 
 
 }

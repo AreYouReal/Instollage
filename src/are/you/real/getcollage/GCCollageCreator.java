@@ -2,8 +2,6 @@ package are.you.real.getcollage;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.os.Handler;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -16,7 +14,7 @@ public class GCCollageCreator {
 
     public static Bitmap createCollage(){
         // TODO: Create several collage possibilities
-        if(!(GCPreferences.areAllBestImagesDownloaded() || GCPreferences.isAnyPhotoIsChecked()))
+        if(!(GCPreferences.areAllBestImagesDownloaded() || GCPreferences.isAnyPhotoIsChecked() || GCPreferences.getRequestCounter() == 1))
             return null;
         if(collage != null)
             return collage;
@@ -25,6 +23,9 @@ public class GCCollageCreator {
             return createSelectedCollage();
 
         ArrayList<Bitmap> bitmaps = GCPreferences.getBmpList();
+
+        if(bitmaps.size() == 0)
+            return null;
 
         Bitmap bitmap = Bitmap.createBitmap(bitmaps.get(0).getWidth() * 5, bitmaps.get(0).getWidth() * 4, Bitmap.Config.ARGB_8888);
 

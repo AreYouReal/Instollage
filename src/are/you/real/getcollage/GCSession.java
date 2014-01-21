@@ -1,11 +1,7 @@
 package are.you.real.getcollage;
 
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,16 +9,17 @@ import org.json.JSONTokener;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
  * Created by AreYouReal on 17/01/14.
  */
 public class GCSession {
-    private static final String TAG = "GCSession";
-    private static final String INSTAGRAM_API_URL = "https://api.instagram.com";
-    private static final String GET_USER_ID_URL = "/v1/users/search?q=";
+    private static final String TAG                 = "GCSession";
+    private static final String INSTAGRAM_API_URL   = "https://api.instagram.com";
+    private static final String GET_USER_ID_URL     = "/v1/users/search?q=";
+    private static final int    CONNECT_TIMEOUT     = 3000;
+    private static final int    READ_TIMEOUT        = 5000;
 
     private static Handler mHandler;
 
@@ -40,6 +37,8 @@ public class GCSession {
                     URL url = new URL(stringUrl);
                     Log.d(TAG, "Request url:" + url);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setConnectTimeout(CONNECT_TIMEOUT);
+                    urlConnection.setReadTimeout(CONNECT_TIMEOUT);
                     urlConnection.setRequestMethod("GET");
                     urlConnection.connect();
                     String response = streamToString(urlConnection.getInputStream());
@@ -64,11 +63,13 @@ public class GCSession {
     }
 
     public static void getUserImages(){
+
         GCPreferences.clearImageUrlArr();
         new Thread(){
             @Override
             public void run() {
                 try {
+                    GCPreferences.refreshRequestCounter();
                     Log.d(TAG, "Fetching user's images");
                     String stringUrl =  "https://api.instagram.com/v1/users/" + GCPreferences.getUserId()
                             + "/media/recent/?count=" + GCPreferences.getMediaLimit()
@@ -77,11 +78,13 @@ public class GCSession {
                         URL url = new URL(stringUrl);
                         Log.d(TAG, "Request url:" + url);
                         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                        urlConnection.setConnectTimeout(CONNECT_TIMEOUT);
+                        urlConnection.setReadTimeout(CONNECT_TIMEOUT);
                         urlConnection.setRequestMethod("GET");
                         urlConnection.connect();
                         String response = streamToString(urlConnection.getInputStream());
                         Log.d(TAG,"Response: " + response);
-
+                        GCPreferences.increseRequestCounter();
                         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
                         if(jsonObject.getJSONObject("pagination").has("next_url"))
                             stringUrl = jsonObject.getJSONObject("pagination").getString("next_url");
