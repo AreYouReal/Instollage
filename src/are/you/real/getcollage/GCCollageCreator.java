@@ -76,9 +76,6 @@ public class GCCollageCreator {
 
         Canvas canvas = new Canvas(bitmap);
 
-
-
-
         int left = 0, top = 0;
         for(Bitmap bmp: checkedBitmaps){
             if(left >= horizontalCoef * bmp.getWidth()){
@@ -93,6 +90,10 @@ public class GCCollageCreator {
 
         collage = bitmap;
         return collage;
+    }
+
+    private static Bitmap createSelectedCollage(int selectedBitmaps){
+        return null;
     }
 
 

@@ -97,6 +97,9 @@ public class GCSession {
                             String[] imageData = getImage(mArray.getJSONObject(i));
                             if(imageData != null)
                                 GCPreferences.putImageUrl(Integer.parseInt(imageData[0]), imageData[1]);
+
+                        if(GCPreferences.getRequestCounter() > 20)
+                            mHandler.sendEmptyMessage(GCPreferences.MSG_A_LOT_OF_DATA);
                         }
                     }while(stringUrl != null);
                     GCPreferences.findTheBestImages();

@@ -79,6 +79,11 @@ public class GCMainActivity extends FragmentActivity {
                     mProgress.dismiss();
                     Toast.makeText(GCMainActivity.this, getResources().getText(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                     return true;
+                case GCPreferences.MSG_A_LOT_OF_DATA:
+                    if(mProgress != null && mProgress.isShowing()){
+                        mProgress.setTitle(R.string.a_lot_of_user_info);
+                    }
+                    return true;
             }
             return false;
         }
@@ -106,6 +111,25 @@ public class GCMainActivity extends FragmentActivity {
         mPagerAdapter = new GCPagerAdapter(getSupportFragmentManager(), NUM_PAGES);
         mPager.setAdapter(mPagerAdapter);
         mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
+
+        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i2) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                if(i == PAGES.FOURTH_PAGE.ordinal() && GCPreferences.isUserLoggedIn()){
+                    mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
     }
 
 
@@ -120,5 +144,19 @@ public class GCMainActivity extends FragmentActivity {
         CookieSyncManager.createInstance(this);
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.removeAllCookie();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mPager.getCurrentItem() == PAGES.FOURTH_PAGE.ordinal()){
+            mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
+            return;
+        }
+        if(mPager.getCurrentItem() == PAGES.FIRST_PAGE.ordinal()){
+            super.onBackPressed();
+        }else{
+            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+        }
+
     }
 }

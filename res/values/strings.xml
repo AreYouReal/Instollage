@@ -17,4 +17,5 @@
     <string name="generating_image">Generating collage</string>
     <string name="successfully_logged">Successfully logged</string>
     <string name="please_log_in">If something to often goes wrong, please login</string>
+    <string name="a_lot_of_user_info">A LOT of user info</string>
 </resources>

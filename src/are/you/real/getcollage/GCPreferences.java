@@ -46,6 +46,7 @@ public class GCPreferences {
     public static final int MSG_FETCHING_USER_INFO_END = 7;
     public static final int MSG_PROGRESS_DIALOG_DISMISS = 8;
     public static final int MSG_ERROR = 9;
+    public static final int MSG_A_LOT_OF_DATA = 10;
 
     private static int requestCounter = 0;
 
@@ -67,6 +68,10 @@ public class GCPreferences {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(ACCESS_TOKEN, DEFAULT_ACCESS_TOKEN);
         editor.commit();
+    }
+
+    public static boolean isUserLoggedIn(){
+        return !(getAccessToken() == DEFAULT_ACCESS_TOKEN);
     }
 
     /**
