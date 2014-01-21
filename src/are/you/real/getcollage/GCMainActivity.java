@@ -19,7 +19,7 @@ public class GCMainActivity extends FragmentActivity {
 
     private static final String TAG = "GCMainActivity";
 
-    private static final int NUM_PAGES = 3;
+    private static final int NUM_PAGES = 4;
     private enum PAGES{FIRST_PAGE, SECOND_PAGE, THIRD_PAGE, FOURTH_PAGE};
 
     private ViewPager       mPager;
@@ -32,13 +32,11 @@ public class GCMainActivity extends FragmentActivity {
     Handler mHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
-            int result = message.getData().getInt(RESULT);
-
-            switch(result){
-                case -4:
+            switch(message.what){
+                case GCPreferences.MSG_NOTHING_TO_SEND:
                     Toast.makeText(GCMainActivity.this, getResources().getText(R.string.nothing_to_send), Toast.LENGTH_SHORT).show();
                     return true;
-                case -3:
+                case GCPreferences.MSG_SAVING_COLLAGE_TO_SD_CARD:
                     mProgress = new ProgressDialog(GCMainActivity.this);
                     mProgress.setTitle(GCMainActivity.this.getResources().getString(R.string.generating_image));
                     mProgress.setMessage(GCMainActivity.this.getResources().getString(R.string.loading));
@@ -46,10 +44,11 @@ public class GCMainActivity extends FragmentActivity {
                     mProgress.setIcon(android.R.drawable.picture_frame);
                     mProgress.show();
                     return true;
-                case -2:
+                case GCPreferences.MSG_TURN_TO_FIRST_PAGE:
                     mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
+                    Toast.makeText(GCMainActivity.this, getResources().getString(R.string.successfully_logged), Toast.LENGTH_SHORT).show();
                     return true;
-                case -1:
+                case GCPreferences.MSG_FETCHING_USER_INFO_START:
                     mProgress = new ProgressDialog(GCMainActivity.this);
                     mProgress.setTitle(GCMainActivity.this.getResources().getString(R.string.fetching_user_info));
                     mProgress.setMessage(GCMainActivity.this.getResources().getString(R.string.loading));
@@ -57,25 +56,26 @@ public class GCMainActivity extends FragmentActivity {
                     mProgress.setIcon(android.R.drawable.ic_menu_camera);
                     mProgress.show();
                     return true;
-                case 1:
+                case GCPreferences.MSG_FETCHING_USER_INFO_END:
+                    // was 1
                     if(mProgress != null && mProgress.isShowing()){
                         mProgress.dismiss();
                         mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
                         mImageAdapter.notifyDataSetChanged();
                     }
                     return true;
-                case 2:
+                case GCPreferences.MSG_TURN_TO_FORTH_PAGE:
                     mPager.setCurrentItem(PAGES.FOURTH_PAGE.ordinal());
                     return true;
-                case 3:
+                case GCPreferences.MSG_TURN_TO_THIRD_PAGE:
                     mPager.setCurrentItem(PAGES.THIRD_PAGE.ordinal());
                     return true;
-                case 4:
+                case GCPreferences.MSG_PROGRESS_DIALOG_DISMISS:
                     if(mProgress != null && mProgress.isShowing()){
                         mProgress.dismiss();
                     }
                     return true;
-                case 666:
+                case GCPreferences.MSG_ERROR:
                     mProgress.dismiss();
                     Toast.makeText(GCMainActivity.this, getResources().getText(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                     return true;
@@ -106,26 +106,6 @@ public class GCMainActivity extends FragmentActivity {
         mPagerAdapter = new GCPagerAdapter(getSupportFragmentManager(), NUM_PAGES);
         mPager.setAdapter(mPagerAdapter);
         mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
-
-        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-
-
     }
 
 

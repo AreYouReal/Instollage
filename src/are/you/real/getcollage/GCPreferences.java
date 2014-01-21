@@ -36,6 +36,17 @@ public class GCPreferences {
 
     private static Handler mHandler;
 
+    public static final int MSG_TURN_TO_FIRST_PAGE = 0;
+    public static final int MSG_TURN_TO_SECOND_PAGE = 1;
+    public static final int MSG_TURN_TO_THIRD_PAGE = 2;
+    public static final int MSG_TURN_TO_FORTH_PAGE = 3;
+    public static final int MSG_NOTHING_TO_SEND = 4;
+    public static final int MSG_SAVING_COLLAGE_TO_SD_CARD = 5;
+    public static final int MSG_FETCHING_USER_INFO_START = 6;
+    public static final int MSG_FETCHING_USER_INFO_END = 7;
+    public static final int MSG_PROGRESS_DIALOG_DISMISS = 8;
+    public static final int MSG_ERROR = 9;
+
     public static void init(Context context, Handler handler){
         if(sharedPref == null){
             sharedPref  = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -47,11 +58,7 @@ public class GCPreferences {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(ACCESS_TOKEN, accessToken);
         editor.commit();
-        Bundle b = new Bundle();
-        b.putInt(GCMainActivity.RESULT, -2);
-        Message msg = new Message();
-        msg.setData(b);
-        mHandler.sendMessage(msg);
+        mHandler.sendEmptyMessage(GCPreferences.MSG_TURN_TO_FIRST_PAGE);
     }
 
     public static void resetAccessToken() {
@@ -114,11 +121,12 @@ public class GCPreferences {
                 }
             }
         }
-        Bundle b = new Bundle();
-        b.putInt(GCMainActivity.RESULT, 1);
+/*        Bundle b = new Bundle();
+        b.putInt(GCMainActivity.RESULT, GCPreferences.MSG_FETCHING_USER_INFO_END);
         Message msg = new Message();
         msg.setData(b);
-        mHandler.sendMessage(msg);
+        mHandler.sendMessage(msg);*/
+        mHandler.sendEmptyMessage(GCPreferences.MSG_FETCHING_USER_INFO_END);
     }
 
     public static String getImageUrl(int position){
@@ -195,6 +203,10 @@ public class GCPreferences {
                 return true;
         }
         return false;
+    }
+
+    public static boolean isAnyImageIsDownloaded(){
+        return bitmaps.size() != 0;
     }
 
 

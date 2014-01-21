@@ -16,7 +16,7 @@ public class GCCollageCreator {
 
     public static Bitmap createCollage(){
         // TODO: Create several collage possibilities
-        if(!GCPreferences.areAllBestImagesDownloaded())
+        if(!(GCPreferences.areAllBestImagesDownloaded() || GCPreferences.isAnyPhotoIsChecked()))
             return null;
         if(collage != null)
             return collage;

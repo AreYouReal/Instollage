@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent" android:background="#ffffff">
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <are.you.real.getcollage.GCImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/collage_image" android:layout_weight="1"
-            android:layout_alignWithParentIfMissing="false"
-            android:adjustViewBounds="false"
-            android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:layout_margin="10dp"
-            android:scaleType="fitCenter"/>
-    <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/send_to_mail"
-            android:id="@+id/sen_to_mail_btn" android:layout_gravity="center_horizontal" android:layout_weight="0"
-            android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"/>
-</LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent" android:background="#ffffff">
+
+        <are.you.real.getcollage.GCImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/collage_image" android:layout_weight="1"
+                android:layout_alignWithParentIfMissing="false"
+                android:adjustViewBounds="false"
+                android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:layout_margin="10dp"
+                android:scaleType="fitCenter"/>
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/send_to_mail"
+                android:id="@+id/sen_to_mail_btn" android:layout_gravity="center_horizontal" android:layout_weight="0"
+                android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"/>
+    </LinearLayout>
+
+    <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/collage_image_stub" android:layout_gravity="center_horizontal"
+            android:src="@drawable/instollage_icon"
+            android:adjustViewBounds="false" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"/>
+</RelativeLayout>

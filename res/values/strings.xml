@@ -15,4 +15,6 @@
     <string name="fetching_user_info">Fetching user info</string>
     <string name="no_sd_card">It seems you have no sd card on the device</string>
     <string name="generating_image">Generating collage</string>
+    <string name="successfully_logged">Successfully logged</string>
+    <string name="please_log_in">If something to often goes wrong, please login</string>
 </resources>

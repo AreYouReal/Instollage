@@ -4,15 +4,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -58,11 +57,7 @@ public class GCSession {
                 }  catch (Exception e) {
                     Log.e(TAG, e.toString());
                     e.printStackTrace();
-                    Bundle b = new Bundle();
-                    b.putInt(GCMainActivity.RESULT, 666);
-                    Message msg = new Message();
-                    msg.setData(b);
-                    mHandler.sendMessage(msg);
+                    mHandler.sendEmptyMessage(GCPreferences.MSG_ERROR);
                 }
             }
         }.start();
@@ -105,11 +100,7 @@ public class GCSession {
                 } catch (Exception e) {
                     Log.e(TAG, e.toString());
                     e.printStackTrace();
-                    Bundle b = new Bundle();
-                    b.putInt(GCMainActivity.RESULT, 666);
-                    Message msg = new Message();
-                    msg.setData(b);
-                    mHandler.sendMessage(msg);
+                    mHandler.sendEmptyMessage(GCPreferences.MSG_ERROR);
                 }
             }
         }.start();

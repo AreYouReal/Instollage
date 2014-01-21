@@ -1,16 +1,12 @@
 package are.you.real.getcollage;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.*;
@@ -31,7 +27,7 @@ public class GCFragment extends Fragment {
     private static Context mContext;
     private static Handler mHandler;
     private static GCImageAdapter mImageAdapter;
-    private static ImageView im;
+    private static ImageView collageView, bestImagesStub, collageStub;
 
     private int numOfPage;
 
@@ -60,16 +56,14 @@ public class GCFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         switch (numOfPage){
             case 3:
-                WebView wv;
-                wv = new WebView(mContext);
-                wv.setWebViewClient(new GCWebViewClient(mContext));
+                ViewGroup loggingView = (ViewGroup) inflater.inflate(R.layout.logging_page, container, false);
+                WebView wv = (WebView) loggingView.findViewById(R.id.webView);
+                wv.setWebViewClient(new GCWebViewClient());
                 wv.getSettings().setJavaScriptEnabled(true);
                 wv.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
                 wv.loadUrl("https://instagram.com/oauth/authorize/?client_id=" + GCPreferences.CLIENT_ID +  "&redirect_uri=" + GCPreferences.CALLBACK_URL + "&response_type=token"); // TODO: WTF? This code crushs my app:))
                 //wv.loadUrl("https://instagram.com/accounts/login/?next=/oauth/authorize/%3Fclient_id%3Dc34062307c0d4594bb3830eaab09488a%26redirect_uri%3Dinstagram%3A//connect%26response_type%3Dtoken"); // TODO: And this doesn't:)
-
-                Log.v(TAG, "Container " + container);
-                return wv;
+                return loggingView;
 
             case 0:
                 ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.user_selecting_screen, container, false);
@@ -82,60 +76,67 @@ public class GCFragment extends Fragment {
                             Toast.makeText(mContext, R.string.error_too_short_username, Toast.LENGTH_SHORT).show();
                         else{
                             GCSession.getUserId(usernameText.getText().toString().trim());
-                            Bundle b = new Bundle();
-                            b.putInt(GCMainActivity.RESULT, -1);
-                            Message msg = new Message();
-                            msg.setData(b);
-                            mHandler.sendMessage(msg);
+                            mHandler.sendEmptyMessage(GCPreferences.MSG_FETCHING_USER_INFO_START);
+                            if(bestImagesStub != null) bestImagesStub.setVisibility(View.INVISIBLE);
+
                         }
                     }
                 });
                 return rootView;
             case 1:
-                ViewGroup collageView = (ViewGroup) inflater.inflate(R.layout.best_images_screen, container, false);
-                GridView grid = (GridView) collageView.findViewById(R.id.collage_grid);
+                ViewGroup bestImagesView = (ViewGroup) inflater.inflate(R.layout.best_images_screen, container, false);
+                GridView grid = (GridView) bestImagesView.findViewById(R.id.collage_grid);
+                bestImagesStub = (ImageView) bestImagesView.findViewById(R.id.best_images_image);
                 grid.setAdapter(mImageAdapter);
+                Log.d(TAG, bestImagesStub + "\t" + mImageAdapter.getCount());
+                if(GCPreferences.isAnyImageIsDownloaded()){
+                    if(bestImagesStub != null) bestImagesStub.setVisibility(View.INVISIBLE);
+                }else{
+                    if(bestImagesStub != null) bestImagesStub.setVisibility(View.VISIBLE);
+                }
                 grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                         GCPreferences.setCheckedGridCell(position, !GCPreferences.getCheckedCell(position));
-                        Log.d(TAG, position + "\t" + view + "\t" + GCPreferences.getCheckedCell(position));
-
                         if(GCPreferences.getCheckedCell(position))
-                            view.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_blue_light));
+                            view.setBackgroundColor(mContext.getResources().getColor(R.color.holo_blue_light));
                         else
-                            view.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
+                            view.setBackgroundColor(mContext.getResources().getColor(R.color.white));
 
                         return false;
                     }
                 });
-                Button create_btn = (Button) collageView.findViewById(R.id.create_collage_btn);
+                Button create_btn = (Button) bestImagesView.findViewById(R.id.create_collage_btn);
                 create_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         GCCollageCreator.clear();
                         Bitmap bmp = GCCollageCreator.createCollage();
-                        Log.d(TAG, "" + bmp);
-                        if(im != null){
-                            im.setImageBitmap(bmp);
-                            im.invalidate();
-                            Log.d(TAG, "Set bmp and invalidate");
+                        if(GCFragment.collageView != null){
+                            Log.d(TAG, "" + bmp);
+                            GCFragment.collageView.setImageBitmap(bmp);
+                            GCFragment.collageView.invalidate();
+                        }else{
+                            collageStub.setVisibility(View.VISIBLE);
                         }
-                        Bundle b = new Bundle();
-                        b.putInt(GCMainActivity.RESULT, 3);
-                        Message msg = new Message();
-                        msg.setData(b);
-                        mHandler.sendMessage(msg);
+                        mHandler.sendEmptyMessage(GCPreferences.MSG_TURN_TO_THIRD_PAGE);
+                        collageStub.setVisibility(View.INVISIBLE);
                     }
                 });
-                return collageView;
+                return bestImagesView;
 
             case 2:
-                ViewGroup collage = (ViewGroup) inflater.inflate(R.layout.collage_screen, container, false);
-                im = (ImageView) collage.findViewById(R.id.collage_image);
-                if(GCCollageCreator.createCollage() != null)
-                    im.setImageBitmap(GCCollageCreator.createCollage());
-                Button button = (Button) collage.findViewById(R.id.sen_to_mail_btn);
+                ViewGroup collageView = (ViewGroup) inflater.inflate(R.layout.collage_screen, container, false);
+                GCFragment.collageView = (ImageView) collageView.findViewById(R.id.collage_image);
+                collageStub = (ImageView) collageView.findViewById(R.id.collage_image_stub);
+                if(GCCollageCreator.createCollage() != null){
+                    GCFragment.collageView.setImageBitmap(GCCollageCreator.createCollage());
+                    if(collageStub != null) collageStub.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    if(collageStub != null) collageStub.setVisibility(View.VISIBLE);
+                }
+                Button button = (Button) collageView.findViewById(R.id.sen_to_mail_btn);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -144,28 +145,15 @@ public class GCFragment extends Fragment {
                             public void run() {
                                 if(GCCollageCreator.createCollage() == null){
                                     /** Nothing to send :( */
-                                    Bundle b1 = new Bundle();
-                                    b1.putInt(GCMainActivity.RESULT, -4);
-                                    Message msg1 = new Message();
-                                    msg1.setData(b1);
-                                    mHandler.sendMessage(msg1);
+                                    mHandler.sendEmptyMessage(GCPreferences.MSG_NOTHING_TO_SEND);
                                     return;
                                 }
-
-                                Bundle b = new Bundle();
-                                b.putInt(GCMainActivity.RESULT, -3);
-                                Message msg = new Message();
-                                msg.setData(b);
-                                mHandler.sendMessage(msg);
+                                mHandler.sendEmptyMessage(GCPreferences.MSG_SAVING_COLLAGE_TO_SD_CARD);
 
                                 File  mFile = savebitmap(GCCollageCreator.createCollage());
 
                                 if(mFile == null){
-                                    Bundle b1 = new Bundle();
-                                    b1.putInt(GCMainActivity.RESULT, 666);
-                                    Message msg1 = new Message();
-                                    msg1.setData(b1);
-                                    mHandler.sendMessage(msg1);
+                                    mHandler.sendEmptyMessage(GCPreferences.MSG_ERROR);
                                     return;
                                 }
 
@@ -173,25 +161,20 @@ public class GCFragment extends Fragment {
                                 u = Uri.fromFile(mFile);
                                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
                                 emailIntent.setType("image/*");
+                                // TODO: String resource need to be added
                                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Hello...");
-                                emailIntent.putExtra(Intent.EXTRA_TEXT, "Your tsxt here");
+                                emailIntent.putExtra(Intent.EXTRA_TEXT, "Your text here");
                                 emailIntent.putExtra(Intent.EXTRA_STREAM, u);
                                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
 
-                                Log.d(TAG, "Start new intent was");
-
-                                Bundle b2 = new Bundle();
-                                b2.putInt(GCMainActivity.RESULT, 4);
-                                Message msg2 = new Message();
-                                msg2.setData(b2);
-                                mHandler.sendMessage(msg2);
+                                mHandler.sendEmptyMessage(GCPreferences.MSG_PROGRESS_DIALOG_DISMISS);
 
                             }
                         }.start();
 
                     }
                 });
-                return collage;
+                return collageView;
             default:
                 return new Button(mContext);
         }
