@@ -15,24 +15,21 @@ import android.widget.Toast;
 
 public class GCMainActivity extends FragmentActivity {
 
-    public static final String RESULT = "RESULT";
-
     private static final String TAG = "GCMainActivity";
 
     private static final int NUM_PAGES = 4;
-    private enum PAGES{FIRST_PAGE, SECOND_PAGE, THIRD_PAGE, FOURTH_PAGE};
 
-    private ViewPager       mPager;
-    private PagerAdapter    mPagerAdapter;
-    private GCImageAdapter  mImageAdapter;
+    private enum PAGES {FIRST_PAGE, SECOND_PAGE, THIRD_PAGE, FOURTH_PAGE};
 
+    private ViewPager      mPager;
+    private PagerAdapter   mPagerAdapter;
+    private GCImageAdapter mImageAdapter;
     private ProgressDialog mProgress;
-
 
     Handler mHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
-            switch(message.what){
+            switch (message.what) {
                 case GCPreferences.MSG_NOTHING_TO_SEND:
                     Toast.makeText(GCMainActivity.this, getResources().getText(R.string.nothing_to_send), Toast.LENGTH_SHORT).show();
                     return true;
@@ -57,8 +54,7 @@ public class GCMainActivity extends FragmentActivity {
                     mProgress.show();
                     return true;
                 case GCPreferences.MSG_FETCHING_USER_INFO_END:
-                    // was 1
-                    if(mProgress != null && mProgress.isShowing()){
+                    if (mProgress != null && mProgress.isShowing()) {
                         mProgress.dismiss();
                         mPager.setCurrentItem(PAGES.SECOND_PAGE.ordinal());
                         mImageAdapter.notifyDataSetChanged();
@@ -71,7 +67,7 @@ public class GCMainActivity extends FragmentActivity {
                     mPager.setCurrentItem(PAGES.THIRD_PAGE.ordinal());
                     return true;
                 case GCPreferences.MSG_PROGRESS_DIALOG_DISMISS:
-                    if(mProgress != null && mProgress.isShowing()){
+                    if (mProgress != null && mProgress.isShowing()) {
                         mProgress.dismiss();
                     }
                     return true;
@@ -80,10 +76,22 @@ public class GCMainActivity extends FragmentActivity {
                     Toast.makeText(GCMainActivity.this, getResources().getText(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                     return true;
                 case GCPreferences.MSG_A_LOT_OF_DATA:
-                    if(mProgress != null && mProgress.isShowing()){
+                    if (mProgress != null && mProgress.isShowing()) {
                         mProgress.setTitle(R.string.a_lot_of_user_info);
                     }
                     return true;
+                case GCPreferences.MSG_USER_NOT_FOUND:
+                    if (mProgress != null && mProgress.isShowing()) {
+                        mProgress.dismiss();
+                        Toast.makeText(GCMainActivity.this, getResources().getText(R.string.user_not_found), Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                case GCPreferences.MSG_EXTREMELY_MANY_DATA:
+                    if (mProgress != null && mProgress.isShowing()) {
+                        mProgress.setTitle(R.string.extremely_many);
+                    }
+                    return true;
+
             }
             return false;
         }
@@ -115,27 +123,19 @@ public class GCMainActivity extends FragmentActivity {
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i2) {
-
             }
 
             @Override
             public void onPageSelected(int i) {
-                if(i == PAGES.FOURTH_PAGE.ordinal() && GCPreferences.isUserLoggedIn()){
+                if (i == PAGES.FOURTH_PAGE.ordinal() && GCPreferences.isUserLoggedIn()) {
                     mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
                 }
             }
 
             @Override
             public void onPageScrollStateChanged(int i) {
-
             }
         });
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -148,13 +148,13 @@ public class GCMainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        if(mPager.getCurrentItem() == PAGES.FOURTH_PAGE.ordinal()){
+        if (mPager.getCurrentItem() == PAGES.FOURTH_PAGE.ordinal()) {
             mPager.setCurrentItem(PAGES.FIRST_PAGE.ordinal());
             return;
         }
-        if(mPager.getCurrentItem() == PAGES.FIRST_PAGE.ordinal()){
+        if (mPager.getCurrentItem() == PAGES.FIRST_PAGE.ordinal()) {
             super.onBackPressed();
-        }else{
+        } else {
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
 

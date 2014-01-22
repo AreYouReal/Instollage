@@ -18,4 +18,9 @@
     <string name="successfully_logged">Successfully logged</string>
     <string name="please_log_in">If something to often goes wrong, please login</string>
     <string name="a_lot_of_user_info">A LOT of user info</string>
+    <string name="extremely_many">EXREMELY MANY user info</string>
+    <string name="user_not_found">User not found.</string>
+    <string name="mail_subject">Instollage</string>
+    <string name="mail_text">Hey, check this collage I have created!</string>
+    <string name="share_via">Share via...</string>
 </resources>

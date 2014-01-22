@@ -15,20 +15,20 @@ import java.net.URL;
  * Created by AreYouReal on 17/01/14.
  */
 public class GCSession {
-    private static final String TAG                 = "GCSession";
-    private static final String INSTAGRAM_API_URL   = "https://api.instagram.com";
-    private static final String GET_USER_ID_URL     = "/v1/users/search?q=";
-    private static final int    CONNECT_TIMEOUT     = 3000;
-    private static final int    READ_TIMEOUT        = 5000;
+    private static final String TAG               = "GCSession";
+    private static final String INSTAGRAM_API_URL = "https://api.instagram.com";
+    private static final String GET_USER_ID_URL   = "/v1/users/search?q=";
+    private static final int    CONNECT_TIMEOUT   = 3000;
+    private static final int    READ_TIMEOUT      = 5000;
 
     private static Handler mHandler;
 
-    public static void init(Handler handler){
+    public static void init(Handler handler) {
         mHandler = handler;
     }
 
-    public static void getUserId(final String userName){
-        new Thread(){
+    public static void getUserId(final String userName) {
+        new Thread() {
             @Override
             public void run() {
                 try {
@@ -42,18 +42,23 @@ public class GCSession {
                     urlConnection.setRequestMethod("GET");
                     urlConnection.connect();
                     String response = streamToString(urlConnection.getInputStream());
-                    Log.d(TAG,"Response: " + response);
+                    Log.d(TAG, "Response: " + response);
 
                     JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
                     JSONArray mArray = jsonObject.getJSONArray("data");
+                    if (mArray.length() <= 0) {
+                        mHandler.sendEmptyMessage(GCPreferences.MSG_USER_NOT_FOUND);
+                        return;
+                    }
 
-                    Log.d(TAG, mArray.getJSONObject(0)+ "\n" + mArray.getJSONObject(0).getString("id"));
+
+                    Log.d(TAG, mArray.getJSONObject(0) + "\n" + mArray.getJSONObject(0).getString("id"));
 
                     String id = mArray.getJSONObject(0).getString("id");
                     Log.d(TAG, "ID: " + id);
                     GCPreferences.setUserId(id);
                     getUserImages();
-                }  catch (Exception e) {
+                } catch (Exception e) {
                     Log.e(TAG, e.toString());
                     e.printStackTrace();
                     mHandler.sendEmptyMessage(GCPreferences.MSG_ERROR);
@@ -62,19 +67,19 @@ public class GCSession {
         }.start();
     }
 
-    public static void getUserImages(){
+    public static void getUserImages() {
 
         GCPreferences.clearImageUrlArr();
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
                     GCPreferences.refreshRequestCounter();
                     Log.d(TAG, "Fetching user's images");
-                    String stringUrl =  "https://api.instagram.com/v1/users/" + GCPreferences.getUserId()
-                            + "/media/recent/?count=" + GCPreferences.getMediaLimit()
-                            + "&access_token=" + GCPreferences.getAccessToken();
-                    do{
+                    String stringUrl = "https://api.instagram.com/v1/users/" + GCPreferences.getUserId()
+                                       + "/media/recent/?count=" + GCPreferences.getMediaLimit()
+                                       + "&access_token=" + GCPreferences.getAccessToken();
+                    do {
                         URL url = new URL(stringUrl);
                         Log.d(TAG, "Request url:" + url);
                         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -83,25 +88,28 @@ public class GCSession {
                         urlConnection.setRequestMethod("GET");
                         urlConnection.connect();
                         String response = streamToString(urlConnection.getInputStream());
-                        Log.d(TAG,"Response: " + response);
+                        Log.d(TAG, "Response: " + response);
                         GCPreferences.increseRequestCounter();
                         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
-                        if(jsonObject.getJSONObject("pagination").has("next_url"))
+                        if (jsonObject.getJSONObject("pagination").has("next_url"))
                             stringUrl = jsonObject.getJSONObject("pagination").getString("next_url");
                         else
                             stringUrl = null;
                         Log.d(TAG, stringUrl == null ? "null" : stringUrl);
                         JSONArray mArray = jsonObject.getJSONArray("data");
                         Log.d(TAG, "" + mArray.length());
-                        for(int i = 0; i < mArray.length(); i++){
+                        for (int i = 0; i < mArray.length(); i++) {
                             String[] imageData = getImage(mArray.getJSONObject(i));
-                            if(imageData != null)
+                            if (imageData != null)
                                 GCPreferences.putImageUrl(Integer.parseInt(imageData[0]), imageData[1]);
 
-                        if(GCPreferences.getRequestCounter() > 20)
-                            mHandler.sendEmptyMessage(GCPreferences.MSG_A_LOT_OF_DATA);
+                            if (GCPreferences.getRequestCounter() == 20)
+                                mHandler.sendEmptyMessage(GCPreferences.MSG_A_LOT_OF_DATA);
                         }
-                    }while(stringUrl != null);
+                        if (GCPreferences.getRequestCounter() == 40) {
+                            mHandler.sendEmptyMessage(GCPreferences.MSG_EXTREMELY_MANY_DATA);
+                        }
+                    } while (stringUrl != null);
                     GCPreferences.findTheBestImages();
                 } catch (Exception e) {
                     Log.e(TAG, e.toString());
@@ -112,12 +120,12 @@ public class GCSession {
         }.start();
     }
 
-    private static String[] getImage(JSONObject jsObject){
+    private static String[] getImage(JSONObject jsObject) {
         try {
-            if(!(jsObject.getString("type").equals("image")))
+            if (!(jsObject.getString("type").equals("image")))
                 return null;
             String[] returnValue = {jsObject.getJSONObject("likes").getString("count")
-                                    ,jsObject.getJSONObject("images").getJSONObject("low_resolution").getString("url")};
+                    , jsObject.getJSONObject("images").getJSONObject("low_resolution").getString("url")};
             return returnValue;
         } catch (JSONException e) {
             Log.e(TAG, e.toString());

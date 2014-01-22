@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Давай Коллаж!</string>
+    <string name="app_name">Instollage</string>
     <string name="loading">Загрузка... Пожалуйста подождите</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
@@ -18,4 +18,9 @@
     <string name="successfully_logged">Вход выполнен</string>
     <string name="please_log_in">Если что-то слишком часто идет не так, пожалуйста, зайдите через свой аккаунт</string>
     <string name="a_lot_of_user_info">Большое количество данных</string>
+    <string name="extremely_many">НЕВЕРОЯТНОЕ количество данных</string>
+    <string name="user_not_found">Пользователь с таким ником не найден</string>
+    <string name="mail_subject">Instollage</string>
+    <string name="mail_text">Привет! Смотри, я создал(а) коллаж!</string>
+    <string name="share_via">Отправить</string>
 </resources>

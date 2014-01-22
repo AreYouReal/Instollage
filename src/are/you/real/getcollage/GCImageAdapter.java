@@ -15,19 +15,19 @@ import com.androidquery.callback.BitmapAjaxCallback;
  */
 public class GCImageAdapter extends BaseAdapter {
     private static final String TAG = "GCImageAdapter";
-    private Context mContext;
-    private static AQuery androidAQuery;
+    private static AQuery  androidAQuery;
+    private        Context mContext;
 
-    public GCImageAdapter(Context context){
+    public GCImageAdapter(Context context) {
         this.mContext = context;
         androidAQuery = new AQuery(mContext);
     }
 
-    public int getCount(){
+    public int getCount() {
         return 20;
     }
 
-    public Object getItem(int position){
+    public Object getItem(int position) {
         return null;
     }
 
@@ -45,14 +45,13 @@ public class GCImageAdapter extends BaseAdapter {
         ProgressBar progress = new ProgressBar(mContext);
         rl.addView(progress);
         rl.addView(im);
-        if(GCPreferences.getCheckedCell(position))
+        if (GCPreferences.getCheckedCell(position))
             rl.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_blue_light));
 
-        androidAQuery.id(im).progress(progress).image(GCPreferences.getImageUrl(position), true, true, 0, 0, new BitmapAjaxCallback(){
+        androidAQuery.id(im).progress(progress).image(GCPreferences.getImageUrl(position), true, true, 0, 0, new BitmapAjaxCallback() {
             @Override
             protected void callback(String url, ImageView iv, Bitmap bm, AjaxStatus status) {
                 iv.setImageBitmap(bm);
-                Log.d(TAG, "" + bm + "\t" + url);
                 GCPreferences.putBitmap(url, bm);
             }
         });

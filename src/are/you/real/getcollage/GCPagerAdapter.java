@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public class GCPagerAdapter extends FragmentStatePagerAdapter {
     private int mPages;
 
-
     public GCPagerAdapter(FragmentManager fm, int pages) {
         super(fm);
         this.mPages = pages;
