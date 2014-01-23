@@ -105,7 +105,16 @@ public class GCFragment extends Fragment {
                         else
                             view.setBackgroundColor(mContext.getResources().getColor(R.color.white));
 
-                        return false;
+                        return true;
+                    }
+                });
+                grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // TODO: Fix relations with ImageVIew size - now it hardcoded to 306x306
+                        Log.d(TAG, "View: " + view + "\tPosition: " + position + "ID: \t" + id);
+                        GCDialog dialog = new GCDialog(mContext, position);
+                        dialog.show();
                     }
                 });
                 Button create_btn = (Button) bestImagesView.findViewById(R.id.create_collage_btn);

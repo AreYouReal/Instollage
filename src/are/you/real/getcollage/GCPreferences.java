@@ -192,6 +192,14 @@ public class GCPreferences {
         return returnValue;
     }
 
+    public static ArrayList<Bitmap> getBmpList2(){
+        ArrayList<Bitmap> returnValue = new ArrayList<Bitmap>();
+        for (int i = 0; i < imagesUrlsArr.length; i++) {
+            returnValue.add(bitmaps.get(imagesUrlsArr[i]));
+        }
+        return returnValue;
+    }
+
     public static ArrayList<Bitmap> getSelectedList() {
         ArrayList<Bitmap> returnValue = new ArrayList<Bitmap>();
         for (int i = 0; i < imagesUrlsArr.length; i++) {
