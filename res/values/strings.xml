@@ -23,4 +23,5 @@
     <string name="mail_subject">Instollage</string>
     <string name="mail_text">Hey, check this collage I have created!</string>
     <string name="share_via">Share via...</string>
+    <string name="timeout_has_expired">Server is not responding</string>
 </resources>

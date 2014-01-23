@@ -91,6 +91,12 @@ public class GCMainActivity extends FragmentActivity {
                         mProgress.setTitle(R.string.extremely_many);
                     }
                     return true;
+                case GCPreferences.MSG_TIMEOUT_EXCEPTION:
+                    if (mProgress != null && mProgress.isShowing()) {
+                        mProgress.dismiss();
+                        Toast.makeText(GCMainActivity.this, getResources().getText(R.string.user_not_found), Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
 
             }
             return false;

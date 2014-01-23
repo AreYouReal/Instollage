@@ -51,6 +51,7 @@ public class GCPreferences {
     public static final int MSG_A_LOT_OF_DATA             = 10;
     public static final int MSG_USER_NOT_FOUND            = 11;
     public static final int MSG_EXTREMELY_MANY_DATA       = 12;
+    public static final int MSG_TIMEOUT_EXCEPTION         = 13;
 
     private static int requestCounter = 0;
 
@@ -192,7 +193,7 @@ public class GCPreferences {
         return returnValue;
     }
 
-    public static ArrayList<Bitmap> getBmpList2(){
+    public static ArrayList<Bitmap> getBmpList2() {
         ArrayList<Bitmap> returnValue = new ArrayList<Bitmap>();
         for (int i = 0; i < imagesUrlsArr.length; i++) {
             returnValue.add(bitmaps.get(imagesUrlsArr[i]));

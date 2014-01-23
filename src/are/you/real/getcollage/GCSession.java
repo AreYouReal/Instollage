@@ -9,7 +9,9 @@ import org.json.JSONTokener;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Created by AreYouReal on 17/01/14.
@@ -58,6 +60,10 @@ public class GCSession {
                     Log.d(TAG, "ID: " + id);
                     GCPreferences.setUserId(id);
                     getUserImages();
+                } catch(SocketTimeoutException ste){
+                    Log.e(TAG, ste.toString());
+                    ste.printStackTrace();
+                    mHandler.sendEmptyMessage(GCPreferences.MSG_TIMEOUT_EXCEPTION);
                 } catch (Exception e) {
                     Log.e(TAG, e.toString());
                     e.printStackTrace();
