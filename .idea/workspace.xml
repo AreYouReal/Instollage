@@ -75,7 +75,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27549be2-7d48-4a90-a024-6860c584da2a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/getcollage.apk" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/getcollage.apk" afterPath="$PROJECT_DIR$/getcollage.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="getcollage.iws" />
@@ -153,7 +153,7 @@
       <file leaf-file-name="strings.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/res/values-ru/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="62" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.40577888" vertical-offset="0" max-vertical-offset="796">
+            <state line="21" column="30" selection-start="1323" selection-end="1323" vertical-scroll-proportion="0.5012563" vertical-offset="0" max-vertical-offset="796">
               <folding />
             </state>
           </provider>
@@ -259,7 +259,7 @@
   </component>
   <component name="GenerateSignedApkSettings">
     <option name="KEY_STORE_PATH" value="$USER_HOME$/Dropbox/CS/android_keystore.jks" />
-    <option name="KEY_ALIAS" value="rjkkkf;" />
+    <option name="KEY_ALIAS" value="Instollage" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -953,7 +953,7 @@
       <workItem from="1390474908165" duration="455000" />
       <workItem from="1390475401483" duration="22000" />
       <workItem from="1390552022153" duration="518000" />
-      <workItem from="1390552920200" duration="5517000" />
+      <workItem from="1390552920200" duration="5824000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/AreYouReal/getcollage&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;&#9;out/production/getcollage/are/you/real/getcollage/GCFragment$1.class&#10;&#9;out/production/getcollage/are/you/real/getcollage/GCFragment$2.class&#10;&#9;out/production/getcollage/are/you/real/getcollage/GCFragment.class&#10;&#9;out/production/getcollage/are/you/real/getcollage/GCMainActivity$1.class&#10;&#9;out/production/getcollage/are/you/real/getcollage/GCMainActivity$2.class&#10;&#9;out/production/getcollage/are/you/real/getcollage/GCMainActivity$PAGES.class&#10;&#9;out/production/getcollage/are/you/real/getcollage/GCMainActivity.class&#10;&#9;out/production/getcollage/are/you/real/getcollage/GCPreferences.class&#10;&#9;out/production/getcollage/are/you/real/getcollage/GCWebVIewClient.class&#10;&#9;out/production/getcollage/getcollage.apk&#10;&#9;out/production/getcollage/getcollage.unaligned.apk&#10;&#9;res/values/strings.xml&#10;&#9;src/are/you/real/getcollage/GCFragment.java&#10;&#9;src/are/you/real/getcollage/GCMainActivity.java&#10;&#9;src/are/you/real/getcollage/GCPreferences.java&#10;">
       <created>1390051781743</created>
@@ -1031,11 +1031,15 @@
       <created>1390559631753</created>
       <updated>1390559631753</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Generated apk was added.">
+      <created>1390559878615</created>
+      <updated>1390559878615</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="128188000" />
+    <option name="totallyTimeSpent" value="128495000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="61" y="22" width="2499" height="1418" extended-state="6" />
@@ -1104,7 +1108,8 @@
     <MESSAGE value="Click on the grid will create a dialog with a bit bigger picture. &#10;" />
     <MESSAGE value="Timeout error was added.&#10;" />
     <MESSAGE value="Ready to post.&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ready to post.&#10;" />
+    <MESSAGE value="Generated apk was added." />
+    <option name="LAST_COMMIT_MESSAGE" value="Generated apk was added." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1508,7 +1513,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/res/values-ru/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="62" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.40577888" vertical-offset="0" max-vertical-offset="796">
+        <state line="21" column="30" selection-start="1323" selection-end="1323" vertical-scroll-proportion="0.5012563" vertical-offset="0" max-vertical-offset="796">
           <folding />
         </state>
       </provider>
