@@ -7,7 +7,7 @@
     <string name="hint">Enter the username</string>
     <string name="get_collage">Get Collage!</string>
     <string name="error_too_short_username">Too short username</string>
-    <string name="send_to_mail">Send e-mail</string>
+    <string name="send_to_mail">Share</string>
     <string name="something_went_wrong">Something went wrong:(</string>
     <string name="get_best_images">Get best user\'s images</string>
     <string name="nothing_to_send">Sorry, there is nothing to send yet...</string>
