@@ -16,7 +16,7 @@
     <string name="no_sd_card">It seems you have no sd card on the device</string>
     <string name="generating_image">Generating collage</string>
     <string name="successfully_logged">Successfully logged</string>
-    <string name="please_log_in">If something to often goes wrong, please login</string>
+    <string name="please_log_in">Please login</string>
     <string name="a_lot_of_user_info">A LOT of user info</string>
     <string name="extremely_many">EXREMELY MANY user info</string>
     <string name="user_not_found">User not found.</string>
@@ -24,4 +24,5 @@
     <string name="mail_text">Hey, check this collage I have created!</string>
     <string name="share_via">Share via...</string>
     <string name="timeout_has_expired">Server is not responding</string>
+    <string name="exceeded_maximum_number_of_requests">Instagram doesn\'t allow a lot of unauthorized requests. Please log in.</string>
 </resources>

@@ -60,6 +60,10 @@ public class GCSession {
                     Log.d(TAG, "ID: " + id);
                     GCPreferences.setUserId(id);
                     getUserImages();
+                }catch(FileNotFoundException fnf){
+                    Log.e(TAG, fnf.toString());
+                    fnf.printStackTrace();
+                    mHandler.sendEmptyMessage(GCPreferences.MSG_MAXIMUM_NUM_OF_REQUESTS);
                 } catch(SocketTimeoutException ste){
                     Log.e(TAG, ste.toString());
                     ste.printStackTrace();

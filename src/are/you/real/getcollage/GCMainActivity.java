@@ -94,7 +94,15 @@ public class GCMainActivity extends FragmentActivity {
                 case GCPreferences.MSG_TIMEOUT_EXCEPTION:
                     if (mProgress != null && mProgress.isShowing()) {
                         mProgress.dismiss();
-                        Toast.makeText(GCMainActivity.this, getResources().getText(R.string.user_not_found), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GCMainActivity.this, getResources().getText(R.string.timeout_has_expired), Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                case GCPreferences.MSG_MAXIMUM_NUM_OF_REQUESTS:
+                    if (mProgress != null && mProgress.isShowing()) {
+                        mProgress.dismiss();
+                        Toast.makeText(GCMainActivity.this, getResources().getText(R.string.exceeded_maximum_number_of_requests), Toast.LENGTH_LONG).show();
+                        if(!GCPreferences.isUserLoggedIn())
+                            mPager.setCurrentItem(PAGES.FOURTH_PAGE.ordinal());
                     }
                     return true;
 

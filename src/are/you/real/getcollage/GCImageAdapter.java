@@ -2,7 +2,7 @@ package are.you.real.getcollage;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -48,6 +48,9 @@ public class GCImageAdapter extends BaseAdapter {
         if (GCPreferences.getCheckedCell(position))
             rl.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_blue_light));
 
+//        AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+//        rl.setLayoutParams(params);
+
         androidAQuery.id(im).progress(progress).image(GCPreferences.getImageUrl(position), true, true, 0, 0, new BitmapAjaxCallback() {
             @Override
             protected void callback(String url, ImageView iv, Bitmap bm, AjaxStatus status) {
@@ -57,6 +60,4 @@ public class GCImageAdapter extends BaseAdapter {
         });
         return rl;
     }
-
-
 }

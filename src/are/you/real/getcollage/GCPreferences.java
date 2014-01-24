@@ -52,6 +52,7 @@ public class GCPreferences {
     public static final int MSG_USER_NOT_FOUND            = 11;
     public static final int MSG_EXTREMELY_MANY_DATA       = 12;
     public static final int MSG_TIMEOUT_EXCEPTION         = 13;
+    public static final int MSG_MAXIMUM_NUM_OF_REQUESTS   = 14;
 
     private static int requestCounter = 0;
 
