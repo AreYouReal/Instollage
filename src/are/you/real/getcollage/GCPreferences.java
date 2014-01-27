@@ -64,10 +64,12 @@ public class GCPreferences {
     }
 
     public static void setAccessToken(String accessToken) {
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(ACCESS_TOKEN, accessToken);
-        editor.commit();
-        mHandler.sendEmptyMessage(GCPreferences.MSG_TURN_TO_FIRST_PAGE);
+        if(!isUserLoggedIn()){
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(ACCESS_TOKEN, accessToken);
+            editor.commit();
+            mHandler.sendEmptyMessage(GCPreferences.MSG_TURN_TO_FIRST_PAGE);
+        }
     }
 
     public static void resetAccessToken() {
